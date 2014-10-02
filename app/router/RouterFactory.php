@@ -20,7 +20,7 @@ class RouterFactory
 	public function createRouter()
 	{
 		$router = new RouteList();
-		$router[] = new Route('<presenter>/<action>[/<id>]', 'Homepage:default');
+		$router[] = new Route('//[!<presenter>.]%domain%/[<url1 [^-/][^/]*>/][<url2 [^-/][^/]*>/][-<action>/]', 'Www:zobraz');
 		return $router;
 	}
 
