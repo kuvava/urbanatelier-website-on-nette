@@ -12,9 +12,6 @@ use Nette,
 class WwwPresenter extends BasePresenter
 {
 
-	public function renderZobraz()
-	{
-		$this->template->anyVariable = 'any value';
-	}
+	protected $presenter_id = 1;
 
 }
