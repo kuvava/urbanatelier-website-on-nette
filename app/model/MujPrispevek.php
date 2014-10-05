@@ -30,7 +30,7 @@ class MujPrispevek extends Nette\Object
 		$url2 = $url2 === NULL ? '' : $url2;
 		$presenterId = (($presenterId === NULL) || ((int)$presenterId < 1)) ? $this->database->table('presenter')->where('jmeno = ?', $presenterName)->min('id') : (int)$presenterId;
 		$mujNakladak->prispevek = $this->database->table('prispevek')->where('url1 = ?', $url1)->where('url2 = ?', $url2)->where('presenter_id = ?', $presenterId)->fetch();
-		if ($mujNakladak->prispevek->smazano > 0) {
+		if ($mujNakladak->prispevek && ($mujNakladak->prispevek->smazano > 0)) {
 			$mujNakladak->prispevek = FALSE;
 		}
 	}
