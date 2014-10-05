@@ -20,6 +20,8 @@ nette:
 	session:
 		expiration: 14 days
 
+	debugger:
+		email: urbanovi@kuvava.cz
 
 services:
 	- App\Model\MujPrispevek
