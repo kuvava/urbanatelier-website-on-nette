@@ -2,25 +2,57 @@
 <html>
 <head>
 	<script>document.cookie='resolution='+Math.max(screen.width,screen.height)+("devicePixelRatio" in window ? ","+devicePixelRatio : ",1")+'; path=/';</script>
+	<meta http-equiv="Content-Language" content="cs">
+	<meta http-equiv="content-type" content="text/html; charset=utf-8">
 	<meta charset="utf-8">
 	<meta name="robots" content="{$robots}" n:ifset="$robots">
 
 	<title>{ifset $mujNakladak->prispevek->titulek}{$mujNakladak->prispevek->titulek} | {/ifset}urbanatelier.cz</title>
+	<meta name="description" content="{ifset $mujNakladak->prispevek->shrnuti_vyhledavace}{$mujNakladak->prispevek->shrnuti_vyhledavace}{else}Lukáš Urban Vám zajistí návrhy interiérů, realizace, výrobu nábytku, focení svateb, fotografování dětí, portrétů, ...{/ifset}">
 
-	<link rel="stylesheet" media="screen,projection,tv" href="{$basePath}/css/screen.css">
+	<link rel="stylesheet" media="screen,projection,tv" href="{$basePath}/css/ua-1-0-0.css">
 	<link rel="stylesheet" media="print" href="{$basePath}/css/print.css">
 	<link rel="shortcut icon" href="{$basePath}/favicon.ico">
 	
 	{block head}{/block}
+	{block menuPosScript}<script>function menuPos1(){ var el1=document.getElementById('m1');if(el1){ var v=document.getElementById('head').offsetHeight;el1.style.top=v+'px';el1.style.display='block'}}</script>{/block}
 </head>
 
-<body>
+<body onresize="menuPos1()">
 	<script> document.documentElement.className+=' js' </script>
 
+<div id="all">
 	<div n:foreach="$flashes as $flash" class="flash {$flash->type}">{$flash->message|noescape}</div>
 
-	{include content}
+	{block hlava}
+	<a class="hid" href="#main" title="Přeskočí všechna menu. Ocitnete se u hlavního textu této stránky.">
+			Skočit na obsah
+	</a>
 
+	<div id="head">
+		<h1><a href="{$basePath}/" title="zpět na úvodní stránku"><img src="{$basePath}/images/loga/logo-urban-atelier.png" alt="Návrhy a realizace interiérů, výroba nábytku, fotografování svateb, umělecké fotografie - Lukáš Urban" height="215" width="783" border="0" onload="menuPos1()"></a></h1>
+		{block menu}
+		{include 'my-components/menu.latte', mujNakladak => $mujNakladak}
+		{/block menu}
+	</div>
+	{/block hlava}
+
+	<div id="main">
+	{include content}
+	{block prispevek}
+		{ifset $mujNakladak->prispevek->id}
+			<div id="text" n:inner-foreach="$mujNakladak->prispevek->related('hlavni_text') as $text">
+				<div>{$text->html|noescape}</div>
+			</div>
+		{/ifset}
+	{/block prispevek}
+	</div>
+	{block pata}
+	<div id="foot">
+		&copy; 2014 URBAN ATELIER
+	</div>
+	{/block pata}
+</div>
 	{block scripts}
 	<script src="{$basePath}/js/jq1111-netteForms.js"></script>
 	<script src="{$basePath}/js/my.js"></script>

@@ -1,0 +1,1 @@
+menuPos1()	definována a spouštěna přímo v html kódu - posouvá vertikálně levé menu podle skutečné výšky hlavičky
