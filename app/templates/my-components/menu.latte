@@ -1,7 +1,6 @@
 {ifset $mujNakladak->menu}
 {if count($mujNakladak->menu) > 0}
 
-{block menu}
 {var $hloubka = -1}
 {var $smazaneLftRgt = array()}
 {var $i = 0}
@@ -25,7 +24,6 @@
 {/if}
 {/foreach}
 	{block |repeat:$hloubka + 1}</li></menu>{/block}
-{/block}
 
 {/if}
 {/ifset}
