@@ -14,6 +14,8 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
 
 	/** @var Model\MujPrispevek @inject */
 	public $mujPrispevek;
+	/** @var Model\MojeMenu @inject */
+	public $mojeMenu;
 	/** @var Model\MujNakladak @inject */
 	public $mujNakladak;
 
@@ -28,6 +30,7 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
 				$this->flashMessage('Omlouváme se, ale stránku nelze nalézt.<br>Kontaktujte prosím správce webu: urbanovi&#64;<!-- -->kuvava.cz<br>nebo si vyberte jiný obsah v menu.','flash-red');
 				$this->error('Odkazovaný obsah nelze nalézt.');
 			}
+			$this->mojeMenu->nalozMenu($this->mujNakladak);
 			$this->template->mujNakladak = $this->mujNakladak;
 		}
 	}

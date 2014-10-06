@@ -1,0 +1,32 @@
+{ifset $mujNakladak->menu}
+{if count($mujNakladak->menu) > 0}
+
+{block menu}
+{var $hloubka = -1}
+{var $smazaneLftRgt = array()}
+{var $i = 0}
+{foreach $mujNakladak->menu as $row}
+{if $row->ref('prispevek')->smazano > 0}
+	{var $smazaneLftRgt[$i]['lft'] = $row->lft}{var $smazaneLftRgt[$i]['rgt'] = $row->rgt}
+	{? $i++}
+{else}
+	{var $bool = TRUE}
+	{foreach $smazaneLftRgt as $keKontrole}
+		{if ($keKontrole['lft'] <= $row->lft) && ($keKontrole['rgt'] >= $row->rgt)}{var $bool = FALSE}{/if}
+		{breakIf !$bool}
+	{/foreach}
+	{if $bool}	
+		{var $link = $row->ref('prispevek')->ref('presenter')->jmeno . ':zobraz'}
+	
+		{if $hloubka < $row->hloubka}<menu>{else}{block |repeat:$hloubka - $row->hloubka}</li></menu>{/block}</li>{/if}
+		<li><a n:href="$link, url1 => $row->ref('prispevek')->url1, url2 => $row->ref('prispevek')->url2" title="{trim($row->special_bublina) === '' ? $row->ref('prispevek')->bublina_odkazu : $row->special_bublina}"><div n:class="in_array($row->id, $mujNakladak->menuAktivni) ? act">{trim($row->special_napis) === '' ? $row->ref('prispevek')->napis_menu : $row->special_napis}</div></a>
+		{var $hloubka = $row->hloubka}
+		{/if}
+{/if}
+{/foreach}
+	{block |repeat:$hloubka + 1}</li></menu>{/block}
+{/block}
+
+{/if}
+{/ifset}
+{* $row->ref('prispevek')->ref('presenter')->jmeno : zobraz url1 => $row->ref('prispevek')->url1, url2 => $row->ref('prispevek')->url2 *}

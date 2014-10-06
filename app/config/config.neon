@@ -26,6 +26,7 @@ nette:
 services:
 	- App\Model\MujPrispevek
 	- App\Model\MujNakladak
+	- App\Model\MojeMenu
 	- App\Model\UserManager
 	- App\RouterFactory
 	router: @App\RouterFactory::createRouter
