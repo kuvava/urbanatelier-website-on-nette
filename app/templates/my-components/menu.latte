@@ -15,16 +15,7 @@
 		{breakIf !$bool}
 	{/foreach}
 	{if $bool}	
-		{var $link = $row->ref('prispevek')->ref('presenter')->jmeno . ':zobraz'}
-	
-		{if $hloubka < $row->hloubka}<menu>{else}{block |repeat:$hloubka - $row->hloubka}</li></menu>{/block}</li>{/if}
-		<li><a n:href="$link, url1 => $row->ref('prispevek')->url1, url2 => $row->ref('prispevek')->url2" title="{trim($row->special_bublina) === '' ? $row->ref('prispevek')->bublina_odkazu : $row->special_bublina}"><div n:class="in_array($row->id, $mujNakladak->menuAktivni) ? act">{trim($row->special_napis) === '' ? $row->ref('prispevek')->napis_menu : $row->special_napis}</div></a>
-		{var $hloubka = $row->hloubka}
-		{/if}
-{/if}
-{/foreach}
-	{block |repeat:$hloubka + 1}</li></menu>{/block}
+		{var $link = $row->ref('prispevek')->ref('presenter')->jmeno . ':zobraz'}{if $hloubka < $row->hloubka}<menu>{else}{block |repeat:$hloubka - $row->hloubka}</li></menu>{/block}</li>{/if}<li><a n:href="$link, url1 => $row->ref('prispevek')->url1, url2 => $row->ref('prispevek')->url2" title="{trim($row->special_bublina) === '' ? $row->ref('prispevek')->bublina_odkazu : $row->special_bublina}"><div n:class="in_array($row->id, $mujNakladak->menuAktivni) ? act">{trim($row->special_napis) === '' ? $row->ref('prispevek')->napis_menu : $row->special_napis}</div></a>{var $hloubka = $row->hloubka}{/if}{/if}{/foreach}{block |repeat:$hloubka + 1}</li></menu>{/block}
 
 {/if}
 {/ifset}
-{* $row->ref('prispevek')->ref('presenter')->jmeno : zobraz url1 => $row->ref('prispevek')->url1, url2 => $row->ref('prispevek')->url2 *}
