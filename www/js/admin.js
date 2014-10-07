@@ -1,6 +1,6 @@
 $(document).ready(function(){
-	$('#frm-chooseUrlForEditForm-preview').click(function(){
-		var cislo = $('#frm-chooseUrlForEditForm-url').val();
+	$(':button.nahled').click(function(){
+		var cislo = $(this).closest('form').find('select.nahled:first').val();
 		if (cislo > 0) {
 			window.open(function(){return '/-nahled/' + cislo + '/';}(), '_blank');
 		} else {

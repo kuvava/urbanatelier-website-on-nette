@@ -50,8 +50,10 @@ class AdminPresenter extends BasePresenter
 		$form = new Nette\Application\UI\Form;
 		$form->addSelect('url', 'Článek', $pole)
 			->setPrompt('Vyber článek k editaci')
-			->setRequired('Musíš si vybrat jeden konkrétní článek z nabídky');
-		$form->addButton('preview', 'Náhled vybraného článku');
+			->setRequired('Musíš si vybrat jeden konkrétní článek z nabídky')
+			->setAttribute('class','nahled');
+		$form->addButton('preview', 'Náhled vybraného článku')
+			->setAttribute('class','nahled');
 		$form->addSubmit('choose', 'Přejít k editaci');
 		$form->onSuccess[] = array($this, 'chooseUrlForEditFormSubmitted');
 		return $form;

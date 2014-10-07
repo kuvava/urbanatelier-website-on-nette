@@ -1,3 +1,4 @@
 act		příslušná cesta v menu k aktuálnímu příspěvku
 hid		schovaný (zejména zpřehledňovače pro hlasové čtečky a textové prohlížeče)
 js		detekce javascriptu: okamžitě při načítání, pokud je přítomen javascript, tak doplní >html< na html.js
+nahled	pokud v jednom <form> je :button.nahled i option.nahled - potom jquery oživí tlačítko
