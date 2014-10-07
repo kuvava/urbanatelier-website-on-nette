@@ -27,8 +27,11 @@ nette:
 
 services:
 	- App\Model\MujPrispevek
+	- App\Model\AdminPrispevek
 	- App\Model\MujNakladak
+	- App\Model\AdminNakladak
 	- App\Model\MojeMenu
+	- App\Model\AdminMenu
 	- App\Model\MujUzivatel
 	- App\Model\UserManager
 	- App\RouterFactory

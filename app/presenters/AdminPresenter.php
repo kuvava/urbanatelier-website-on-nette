@@ -12,6 +12,13 @@ use Nette,
 class AdminPresenter extends BasePresenter
 {
 
+	/** @var Model\AdminNakladak @inject */
+	public $adminNakladak;
+	/** @var Model\AdminPrispevek @inject */
+	public $adminPrispevek;
+	/** @var Model\AdminMenu @inject */
+	public $adminMenu;
+	
 	protected $user = NULL;
 	
 	public function startup()
@@ -26,7 +33,8 @@ class AdminPresenter extends BasePresenter
 	
 	public function beforeRender()
 	{
-		
+		$this->adminPrispevek->nalozPoleVsech($this->adminNakladak);
+		$this->adminMenu->nalozPoleVsech($this->adminNakladak);
 		parent::beforeRender();
 	}
 
