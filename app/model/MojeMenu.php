@@ -43,6 +43,7 @@ class MojeMenu extends Nette\Object
 		}
 		if (!$mN->menu) {
 			$mN->menu = $this->database->table('menu')->where('hloubka = ?', 0)->order('lft');
+			$mN->menuAktivni[] = NULL;
 		}
 	}
 

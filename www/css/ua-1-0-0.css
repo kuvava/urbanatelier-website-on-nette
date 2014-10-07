@@ -5,7 +5,7 @@ html.js #m0 #m1 #m2,#m0 #m1 li{
 display:block;}
 #m0 li{
 display:inline-block}
-#m1{
+#m1,#user{
 position:absolute;}
 #all{
 position:relative;}
@@ -14,7 +14,11 @@ position:static;}
 #m1{
 top:0px;
 left:0px;
-z-index:15}
+z-index:15;}
+#user{
+top:0px;
+right:0px;
+z-index:25;}
 #all{
 max-width:1400px;
 min-width:800px;}
@@ -44,12 +48,17 @@ margin-bottom:0;}
 margin-top:0;}
 #m0 #m1 #m2 li{
 margin-left:5%;}
+div.flash{
+margin:1em;margin:1rem;
+}
 #head h1,menu{
 padding:0;}
-#text div{
+#text div, #text div.flash{
 padding:1em;padding:1rem}
 menu li div{
 padding: 0.3em 0;padding-top:0.3rem;padding-bottom:0.3rem}
+#user{
+padding:0.3em;padding:0.3rem;}
 #m0 #m1 li div{
 padding-left:5%;}
 #m0 #m1 #m2 #m3 li div{
@@ -60,7 +69,7 @@ div#all,menu a,#m0 #m1 #m2 li,#m0 #m1 #m2 .act{
 color:#494f52;}
 #m0,#m1{
 background-color:#f4f5f6;}
-#m0 li div.act,#m1 li div.act,#m2{
+#m0 li div.act,#m1 li div.act,#m2,#user,#user a{
 color:#f4f5f6;
 background-color:#494f52;}
 #m0 #m1 #m2 li,#m0 #m1 #m2 .act{
@@ -72,7 +81,7 @@ div#foot{
 font-size:0.8em;font-size:0.8rem}
 #all img{
 vertical-align:middle;}
-#m0 li div,#foot{
+#m0 li div,#foot,div.flash{
 text-align:center;}
 #m0 #m1 li div{
 text-align:left;}
@@ -91,9 +100,7 @@ content: "- ";}
 div.flash{
 color: black;
 background: #FFF9D7;
-border: 1px solid #E2C822;
-padding: 1em;
-margin: 1em 0;}
+border: 1px solid #E2C822;}
 a[href^="#error:"]{
 background: red;
 color: white;}

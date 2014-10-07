@@ -4,3 +4,4 @@ head	vrchní část webu (hlavička, menu a tak)
 m1,m2,m3,...	jednotlivé úrovně hlavního menu - je kolem toho trochu javascriptové magie
 main	hlavní obsah (#text, galerie, ...)
 text	samotný text hlavního příspěvku
+user	rámeček s údaji pro přihlášeného uživatele

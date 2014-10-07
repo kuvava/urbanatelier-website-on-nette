@@ -9,7 +9,7 @@ use Nette,
 /**
  * Sign in/out presenters.
  */
-class SignPresenter extends BasePresenter
+class UzivatelPresenter extends BasePresenter
 {
 
 
@@ -21,14 +21,14 @@ class SignPresenter extends BasePresenter
 	{
 		$form = new Nette\Application\UI\Form;
 		$form->addText('username', 'Username:')
-			->setRequired('Please enter your username.');
+			->setRequired('Vyplňte prosím uživatelské jméno.');
 
 		$form->addPassword('password', 'Password:')
-			->setRequired('Please enter your password.');
+			->setRequired('Zadejte prosím příslušné heslo.');
 
-		$form->addCheckbox('remember', 'Keep me signed in');
+		$form->addCheckbox('remember', 'Ponechat mě dlouhodobě přihlášeného');
 
-		$form->addSubmit('send', 'Sign in');
+		$form->addSubmit('send', 'Přihlásit');
 
 		// call method signInFormSucceeded() on success
 		$form->onSuccess[] = $this->signInFormSucceeded;
@@ -46,7 +46,7 @@ class SignPresenter extends BasePresenter
 
 		try {
 			$this->getUser()->login($values->username, $values->password);
-			$this->redirect('Homepage:');
+			$this->redirect('Www:zobraz');
 
 		} catch (Nette\Security\AuthenticationException $e) {
 			$form->addError($e->getMessage());
@@ -54,11 +54,16 @@ class SignPresenter extends BasePresenter
 	}
 
 
-	public function actionOut()
+	public function actionOdhlas()
 	{
 		$this->getUser()->logout();
-		$this->flashMessage('You have been signed out.');
-		$this->redirect('in');
+		$this->flashMessage('Byl jste úspěšně odhlášen.');
+		$this->redirect('WWW:zobraz',array('url1'=> 'u3', 'url2'=>'u5'));
+	}
+	
+	public function actionZobraz()
+	{
+		$this->redirect('prihlas');
 	}
 
 }

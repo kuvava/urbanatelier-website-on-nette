@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<script>document.cookie='resolution='+Math.max(screen.width,screen.height)+("devicePixelRatio" in window ? ","+devicePixelRatio : ",1")+'; path=/';</script>
+	<script>document.cookie='resolution='+Math.max(screen.width,screen.height)+("devicePixelRatio" in window ? ","+devicePixelRatio : ",1")+'; path=/; domain=.localhost.com';</script>
 	<meta http-equiv="Content-Language" content="cs">
 	<meta http-equiv="content-type" content="text/html; charset=utf-8">
 	<meta charset="utf-8">
@@ -18,11 +18,14 @@
 	{block menuPosScript}<script>function menuPos1(){ var el1=document.getElementById('m1');if(el1){ var v=document.getElementById('head').offsetHeight;el1.style.top=v+'px';el1.style.display='block'}}</script>{/block}
 </head>
 
-<body onresize="menuPos1()">
+<body {block menuPosScript2}onresize="menuPos1()"{/block}>
 	<script> document.documentElement.className+=' js' </script>
 
 <div id="all">
-	<div n:foreach="$flashes as $flash" class="flash {$flash->type}">{$flash->message|noescape}</div>
+	<div n:if="$user->loggedIn" id="user">
+		Přihlášený uživatel:<br><strong>{$mujNakladak->uzivatel['username']}</strong> {if $user->isInRole('admin')}(administrátor){/if}<br>
+		<a n:href="Uzivatel:odhlas"><strong>Odhlásit se</strong></a>
+	</div>
 
 	{block hlava}
 	<a class="hid" href="#main" title="Přeskočí všechna menu. Ocitnete se u hlavního textu této stránky.">
@@ -30,7 +33,7 @@
 	</a>
 
 	<div id="head">
-		<h1><a href="{$basePath}/" title="zpět na úvodní stránku"><img src="{$basePath}/images/loga/logo-urban-atelier.png" alt="Návrhy a realizace interiérů, výroba nábytku, fotografování svateb, umělecké fotografie - Lukáš Urban" height="215" width="783" border="0" onload="menuPos1()"></a></h1>
+		<h1><a href="{$basePath}/" title="zpět na úvodní stránku"><img src="{$basePath}/images/loga/logo-urban-atelier.png" alt="Návrhy a realizace interiérů, výroba nábytku, fotografování svateb, umělecké fotografie - Lukáš Urban" height="215" width="783" border="0" {block menuPosScript3}onload="menuPos1()"{/block}></a></h1>
 		{block menu}
 		{include 'my-components/menu.latte', mujNakladak => $mujNakladak}
 		{/block menu}
@@ -38,14 +41,15 @@
 	{/block hlava}
 
 	<div id="main">
-	{include content}
-	{block prispevek}
-		{ifset $mujNakladak->prispevek->id}
-			<div id="text" n:inner-foreach="$mujNakladak->prispevek->related('hlavni_text') as $text">
-				<div>{$text->html|noescape}</div>
+		<div id="text">
+			<div n:foreach="$flashes as $flash" class="flash {$flash->type}">{$flash->message|noescape}</div>
+			<div>
+				{include content}
+				{block prispevek}
+				{ifset $mujNakladak->prispevek->id}{foreach $mujNakladak->prispevek->related('hlavni_text') as $text}{$text->html|noescape}{/foreach}{/ifset}
+				{/block prispevek}
 			</div>
-		{/ifset}
-	{/block prispevek}
+		</div>
 	</div>
 	{block pata}
 	<div id="foot">

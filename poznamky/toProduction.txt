@@ -1,0 +1,2 @@
+@layout.latte -> <head><scritp>document.cookie       změnit jméno domény
+config.neon -> session -> cookie.domain ->        změnit jméno domény

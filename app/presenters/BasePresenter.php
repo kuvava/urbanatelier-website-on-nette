@@ -18,20 +18,18 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
 	public $mojeMenu;
 	/** @var Model\MujNakladak @inject */
 	public $mujNakladak;
+	/** @var Model\MujUzivatel @inject */
+	public $mujUzivatel;
 
 	protected $presenter_id = NULL;
 	
 	public function beforeRender()
 	{
-		if ($this->name !== 'Error') {
-			
-			$this->mujPrispevek->nalozPrispevek($this->mujNakladak, $this->presenter_id, $this->getParameter('url1'), $this->getParameter('url2'), $this->name);
-			if (!$this->mujNakladak->prispevek) {
-				$this->flashMessage('Omlouváme se, ale stránku nelze nalézt.<br>Kontaktujte prosím správce webu: urbanovi&#64;<!-- -->kuvava.cz<br>nebo si vyberte jiný obsah v menu.','flash-red');
-				$this->error('Odkazovaný obsah nelze nalézt.');
-			}
-			$this->mojeMenu->nalozMenu($this->mujNakladak);
-			$this->template->mujNakladak = $this->mujNakladak;
+		$this->mojeMenu->nalozMenu($this->mujNakladak);
+		$this->template->mujNakladak = $this->mujNakladak;
+		$user = $this->getUser();
+		if ($user->isLoggedIn()) {
+			$this->mujUzivatel->nalozUzivatele($this->mujNakladak, $user->id);
 		}
 	}
 	
