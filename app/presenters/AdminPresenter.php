@@ -33,9 +33,29 @@ class AdminPresenter extends BasePresenter
 	
 	public function beforeRender()
 	{
-		$this->adminPrispevek->nalozPoleVsech($this->adminNakladak);
-		$this->adminMenu->nalozPoleVsech($this->adminNakladak);
 		parent::beforeRender();
+	}	
+	
+	
+	protected function createComponentChooseUrlForEditForm()
+	{
+		$pole = $this->adminNakladak->dejCiVyrobSeznamUrl($this->adminPrispevek);
+		//\Tracy\Debugger::FireLog($pole);
+		
+		$form = new Nette\Application\UI\Form;
+		$form->addSelect('url', 'Článek', $pole)
+			->setPrompt('Vyber článek k editaci')
+			->setRequired('Musíš si vybrat jeden konkrétní článek z nabídky');
+		$form->addSubmit('choose', 'Přejít k editaci');
+		$form->onSuccess[] = array($this, 'chooseUrlForEditFormSubmitted');
+		return $form;
+	}
+	
+	public function chooseUrlForEditFormSubmitted(Nette\Application\UI\Form $form)
+	{
+		$values = $form->getValues(TRUE);
+		\Tracy\Debugger::FireLog($values);
+		$this->redirect('this');
 	}
 
 }

@@ -23,12 +23,15 @@ class AdminPrispevek extends Nette\Object
 	* nutno doplnit
 	* 
 	*/
-	public function nalozPoleVsech($aN)
+	public function vyrobPoleVsech()
 	{
+		$pole = NULL;
 		$table = $this->database->table('prispevek')->order('presenter_id, url1, url2');
 		foreach ($table as $row) {
-			$aN->allUrls[$row->id] = 'http://' . $row->ref('presenter')->jmeno . '.atelierurban.cz/' . $row->url1 . (($row->url1 === '') ? '' : '/') . $row->url2 . (($row->url2 === '') ? '' : '/');
+			$pole[$row->id] = 'http://' . $row->ref('presenter')->jmeno . '.atelierurban.cz/' . $row->url1 . (($row->url1 === '') ? '' : '/') . $row->url2 . (($row->url2 === '') ? '' : '/');
 		}
+		//\Tracy\Debugger::FireLog($pole);
+		return $pole;
 	}
 
 }

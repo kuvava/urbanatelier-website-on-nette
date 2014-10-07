@@ -23,13 +23,16 @@ class AdminMenu extends Nette\Object
 	* nutno doplnit
 	* 
 	*/
-	public function nalozPoleVsech($aN)
+	public function vyrobPoleVsech($allUrls)
 	{
+		$pole = NULL;
 		$table = $this->database->table('menu')->order('lft');
 		foreach ($table as $row) {
-			$aN->allMenus[$row->id] = array('hloubka' => $row->hloubka, 'url' => $aN->allUrls[$row->prispevek_id]);
+			$pole[$row->id] = array('hloubka' => $row->hloubka, 'url' => $allUrls[$row->prispevek_id], 'urlId' => $row->prispevek_id, 'napis' => ($row->special_napis === '' ? $row->ref('prispevek')->napis_menu : $row->special_napis));
 		}
-		\Tracy\Debugger::FireLog($aN->allMenus);
+		//\Tracy\Debugger::FireLog($pole);
+		return $pole;
+		
 	}
 
 }

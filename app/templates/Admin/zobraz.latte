@@ -1,4 +1,8 @@
 {block h1}<h1>&nbsp;<br>ADMINISTRACE<br>&nbsp;</h1>{/block}
-
+{block scripts}
+{include parent}
+<script src="{$basePath}/js/admin.js"></script>
+{/block}
 {block content}
+{control chooseUrlForEditForm}
 {/block}
