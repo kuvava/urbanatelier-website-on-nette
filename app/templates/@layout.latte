@@ -24,7 +24,8 @@
 <div id="all">
 	<div n:if="$user->loggedIn" id="user">
 		Přihlášený uživatel:<br><strong>{$mujNakladak->uzivatel['username']}</strong> {if $user->isInRole('admin')}(administrátor){/if}<br>
-		<a n:href="Uzivatel:odhlas"><strong>Odhlásit se</strong></a>
+		<a n:href="Uzivatel:odhlas"><strong>Odhlásit se</strong></a><br><br>
+		<a n:href="Admin:zobraz"><strong>Spravovat stránky</strong></a>
 	</div>
 
 	{block hlava}
@@ -33,7 +34,7 @@
 	</a>
 
 	<div id="head">
-		<h1><a href="{$basePath}/" title="zpět na úvodní stránku"><img src="{$basePath}/images/loga/logo-urban-atelier.png" alt="Návrhy a realizace interiérů, výroba nábytku, fotografování svateb, umělecké fotografie - Lukáš Urban" height="215" width="783" border="0" {block menuPosScript3}onload="menuPos1()"{/block}></a></h1>
+		<h1>{block h1}<a href="{$basePath}/" title="zpět na úvodní stránku"><img src="{$basePath}/images/loga/logo-urban-atelier.png" alt="Návrhy a realizace interiérů, výroba nábytku, fotografování svateb, umělecké fotografie - Lukáš Urban" height="215" width="783" border="0" {block menuPosScript3}onload="menuPos1()"{/block}></a>{/block h1}</h1>
 		{block menu}
 		{include 'my-components/menu.latte', mujNakladak => $mujNakladak}
 		{/block menu}

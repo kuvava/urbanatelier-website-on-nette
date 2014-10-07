@@ -20,10 +20,10 @@ class UzivatelPresenter extends BasePresenter
 	protected function createComponentSignInForm()
 	{
 		$form = new Nette\Application\UI\Form;
-		$form->addText('username', 'Username:')
-			->setRequired('Vyplňte prosím uživatelské jméno.');
+		$form->addText('username', 'Uživatelské jméno:')
+			->setRequired('Vyplňte prosím přihlašovací jméno.');
 
-		$form->addPassword('password', 'Password:')
+		$form->addPassword('password', 'Heslo:')
 			->setRequired('Zadejte prosím příslušné heslo.');
 
 		$form->addCheckbox('remember', 'Ponechat mě dlouhodobě přihlášeného');
@@ -58,7 +58,7 @@ class UzivatelPresenter extends BasePresenter
 	{
 		$this->getUser()->logout();
 		$this->flashMessage('Byl jste úspěšně odhlášen.');
-		$this->redirect('WWW:zobraz',array('url1'=> 'u3', 'url2'=>'u5'));
+		$this->redirect('prihlas');
 	}
 	
 	public function actionZobraz()

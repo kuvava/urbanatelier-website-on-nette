@@ -17,7 +17,7 @@ class MujNakladak extends Nette\Object
 	public $menu = NULL;
 	/** ukazuje v databázové tabulce `menu` na konkrétní řádek týkající se aktivního příspěvku */
 	public $menuAktivni = NULL;
-	/** pole zveřejnitelných údajů o přihlášeném uživatli */
+	/** pole zveřejnitelných údajů o přihlášeném uživateli */
 	public $uzivatel = array();
 
 }
