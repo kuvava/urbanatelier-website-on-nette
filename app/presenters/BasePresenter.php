@@ -37,5 +37,11 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
 	{
 		
 	}
+	
+	protected function shootError($message = 'Omlouváme se, ale stránku nelze nalézt.<br>Kontaktujte prosím správce webu: urbanovi&#64;<!-- -->kuvava.cz<br>nebo si vyberte jiný obsah v menu.', $class = 'flash-red')
+	{
+		$this->flashMessage($message,$class);
+		$this->error('Odkazovaný obsah nelze nalézt.');
+	}
 
 }

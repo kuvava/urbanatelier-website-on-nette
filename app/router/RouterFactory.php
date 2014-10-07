@@ -20,7 +20,7 @@ class RouterFactory
 	public function createRouter()
 	{
 		$router = new RouteList();
-		$router[] = new Route('//[!<presenter>.]%domain%/[<url1 [^-/][^/]*>/][<url2 [^-/][^/]*>/][-<action>/]', 'Www:zobraz');
+		$router[] = new Route('//[!<presenter>.]%domain%/[<url1 ([a-zA-Z][^/]*|[0-9]+[^/0-9]+)>/][<url2 ([a-zA-Z][^/]*|[0-9]+[^/0-9]+)>/][-<action>/][<cislo [0-9]+>/]', 'Www:zobraz');
 		return $router;
 	}
 

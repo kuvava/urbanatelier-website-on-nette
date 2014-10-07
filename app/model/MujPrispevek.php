@@ -30,9 +30,21 @@ class MujPrispevek extends Nette\Object
 		$url2 = $url2 === NULL ? '' : $url2;
 		$presenterId = (($presenterId === NULL) || ((int)$presenterId < 1)) ? $this->database->table('presenter')->where('jmeno = ?', $presenterName)->min('id') : (int)$presenterId;
 		$mujNakladak->prispevek = $this->database->table('prispevek')->where('url1 = ?', $url1)->where('url2 = ?', $url2)->where('presenter_id = ?', $presenterId)->fetch();
-		if ($mujNakladak->prispevek && ($mujNakladak->prispevek->smazano > 0)) {
-			$mujNakladak->prispevek = FALSE;
+	}
+	
+	public function sestavLink($id)
+	{
+		if ((int)$id > 0) {
+			$row = $this->database->table('prispevek')->get((int)$id);
+			if ($row) {
+				$link['base'] = $row->ref('presenter')->jmeno . ':zobraz';
+				$link['params'] = array('url1' => $row->url1, 'url2' => $row->url2);
+			}
+		} else {
+			$link = FALSE;
 		}
+		return $link;
+		
 	}
 
 }

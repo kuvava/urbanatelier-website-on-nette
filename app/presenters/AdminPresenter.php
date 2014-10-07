@@ -19,12 +19,9 @@ class AdminPresenter extends BasePresenter
 	/** @var Model\AdminMenu @inject */
 	public $adminMenu;
 	
-	protected $user = NULL;
-	
 	public function startup()
 	{
 		parent::startup();
-		$this->user = $this->getUser();
 		if (!$this->user->isInRole('admin')) {
 			$this->flashMessage('Pro vstup do požadované části webu se nejprve musíte přihlásit jako uživatel s administrátorskými právy.','flash-red');
 				$this->redirect('Uzivatel:prihlas');
@@ -35,7 +32,15 @@ class AdminPresenter extends BasePresenter
 	{
 		parent::beforeRender();
 	}	
-	
+	public function actionNahled()
+	{
+		$link = $this->mujPrispevek->sestavLink($this->getParameter('cislo'));
+		if ($link) {
+			$this->redirect($link['base'], $link['params']);
+		} else {
+			$this->shootError();
+		}
+	}
 	
 	protected function createComponentChooseUrlForEditForm()
 	{
@@ -46,6 +51,7 @@ class AdminPresenter extends BasePresenter
 		$form->addSelect('url', 'Článek', $pole)
 			->setPrompt('Vyber článek k editaci')
 			->setRequired('Musíš si vybrat jeden konkrétní článek z nabídky');
+		$form->addButton('preview', 'Náhled vybraného článku');
 		$form->addSubmit('choose', 'Přejít k editaci');
 		$form->onSuccess[] = array($this, 'chooseUrlForEditFormSubmitted');
 		return $form;
