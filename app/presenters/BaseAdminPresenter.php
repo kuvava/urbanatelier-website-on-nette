@@ -39,14 +39,38 @@ class BaseAdminPresenter extends BasePresenter
 		$form['url2']->addConditionOn($form['url1'], ~Form::FILLED)->addRule(Form::BLANK,'Vždy když používáš 2. část URL adresy, musíš také vyplnit i první část URL adresy... Takže buď vyplň pouze první část a druhé políčko nech prázdné... Nebo vyplň obě zároveň...');
 		$form->addGroup('Náležitosti')->setOption('embedNext', TRUE);
 		$form->addText('titulek', 'Titulek:', 70, 100)->setOption('description', html::el('small')->setHtml('<strong>Do titulku nevyplňuj: | urbanatelier.cz (to se tam doplní automaticky).</strong><p>Titulek se zobrazuje na záložce prohlížečového okna. Lidi to tam nevidí. Ale je to také <strong>modrý odkazový nadpis ve výsledcích googlu</strong>.<br>(Zobrazí se tam asi 70 znaků.) Tam to má obrovský psychologický význam, když lidi projíždí bleskově očima všechny výsledky odshora dolů. Vyplatí se tam dát něco, co skutečně hledají a na co kliknou... Samotný robot googlu slovům v titulku přikládá velkou váhu...<p>'));
-		$form->addText('shrnuti_vyhledavace', 'Shrnutí pro vyhledávače:',150, 200)->setOption('description', html::el('small')->setHtml('Stručně shrň aktuální obsah dané url adresy (článku). Google může (a dělá to rád) tento Tvůj popisek zobrazit jako text výsledku hledání - zobrazuje tam okolo 145 znaků.'));
+		$form->addText('shrnuti_vyhledavace', 'Shrnutí pro vyhledávače:',130, 200)->setOption('description', html::el('small')->setHtml('Stručně shrň aktuální obsah dané url adresy (článku). Google může (a dělá to rád) tento Tvůj popisek zobrazit jako text výsledku hledání - zobrazuje tam okolo 145 znaků.'));
 		$form->addGroup('Popisky odkazu');
 		$form->addText('napis_menu', 'Text odkazu v menu:', 50, 100)->setRequired('Vyplň povinně text pro odkazy v menu.');
 		$form->addText('bublina_odkazu', 'Vyskakovací bublina odkazu:', 70, 156)->setOption('description', html::el('small')->setHtml('To je takový ten drobný rámeček s dovysvětlením, který vyskočí, když člověk chvíli počká s myší na odkazu... Pro uživatele s dotykovým displayem (bez myši) je to asi nedostupné. Vyhledávače na to neberou zřetel. Nadužívání by možná i penalizovaly. Někdy se hodí k stručnému odkazu poskytnout v této bublině další informace.'));
+		$form->addGroup('Hlavní text stránky');
+		$form->addTextArea('texy', 'Text (nápovědu k formátování nalezneš dole):', 100, 20);
 		$form->addGroup('Volby odeslání');
-		$form->addCheckbox('smazano', 'Znepřístupnit článek pro uživatele bez administrátorských práv? (Ukáže se jim "stránka nenalezena", navíc položka zmizí z menu včetně podpoložek...)');
+		$form->addCheckbox('smazano', 'Znepřístupnit článek pro uživatele bez administrátorských práv?')->setOption('description', html::el('small')->setHtml('(Ukáže se jim "stránka nenalezena", navíc položka zmizí z menu včetně podpoložek...)'));
 		$form->addSubmit('preview', 'Nezávazný náhled')->onClick[] = array($this, 'submittedPreviewEditArticleForm');
 		$form->addSubmit('save', 'Uložit')->onClick[] = array($this, 'submittedSaveEditArticleForm');
+
+		$pole2 = array(
+			'a' => 'Odstavce a odřádkování',
+			'b' => 'Tučné písmo, kurzíva, ...',
+			'c' => 'Nadpisy, podnadpisy, ',
+			'd' => 'Aktivní odkazy v textu',
+			'e' => 'Jsi v koncích?'
+			);
+		$pole3 = $this->adminNakladak->dejCiVyrobSeznamUrl($this->adminPrispevek);
+		$form->addGroup('Nápověda k formátovacímu editoru Texy2');
+		$form->addSelect('help1', 'Jaké formátování by se Ti mohlo hodit v článku (odstavce, nadpisy, tučné písmo, ...):', $pole2)
+			->setPrompt('Zvol, co Tě zajímá...')
+			->setOmitted;
+		$form->addSelect('url_napoveda', 'Nápověda odkazů k článkům v rámci Tvého webu:', $pole3)
+			->setPrompt('Vyber, ke kterému článku potřebuješ vygenerovat odkazovou formátovací zkratku')
+			->setAttribute('class','nahled ah1')
+			->setOmitted;
+		$form->addButton('preview2', 'Ukázat odkazovaný článek v novém okně')
+			->setAttribute('class','nahled');
+		
+		
+		
 		$this->setCustomFormRendering($form);
 		return $form;
 	}
