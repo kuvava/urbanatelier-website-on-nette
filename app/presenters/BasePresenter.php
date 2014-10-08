@@ -43,5 +43,14 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
 		$this->flashMessage($message,$class);
 		$this->error('Odkazovaný obsah nelze nalézt.');
 	}
+	
+	protected function setCustomFormRendering(Nette\Application\UI\Form $form)
+	{
+		$renderer = $form->getRenderer();
+		$renderer->wrappers['controls']['container'] = 'dl';
+		$renderer->wrappers['pair']['container'] = 'div';
+		$renderer->wrappers['label']['container'] = 'dt';
+		$renderer->wrappers['control']['container'] = 'dd';
+	}
 
 }
