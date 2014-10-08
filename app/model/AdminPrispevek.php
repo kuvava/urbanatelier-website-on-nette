@@ -33,5 +33,15 @@ class AdminPrispevek extends Nette\Object
 		//\Tracy\Debugger::FireLog($pole);
 		return $pole;
 	}
+	public function vyrobPolePresenteru()
+	{
+		$pole = NULL;
+		$table = $this->database->table('presenter')->order('jmeno');
+		foreach ($table as $row) {
+			$pole[$row->id] = $row->jmeno;
+		}
+		
+		return $pole;
+	}
 
 }

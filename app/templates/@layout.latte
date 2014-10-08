@@ -20,7 +20,7 @@
 
 <body {block menuPosScript2}onresize="menuPos1()"{/block}>
 	<script> document.documentElement.className+=' js' </script>
-
+{block helpers}{/block helpers}
 <div id="all">
 	<div n:if="$user->loggedIn" id="user">
 		Přihlášený uživatel:<br><strong>{$mujNakladak->uzivatel['username']}</strong> {if $user->isInRole('admin')}(administrátor){/if}<br>

@@ -17,6 +17,8 @@ class AdminNakladak extends Nette\Object
 	protected $allMenus = NULL;
 	/** pole všech id příspěvků, které jsou v databázy označeny: smazano > 0 */
 	protected $allHidUrls = NULL;
+	/** pole jmen všech veřejných presenterů (jako klíč jsou použity `id` z databáze) */
+	protected $allPresenters = NULL;
 	
 	public function dejCiVyrobSeznamUrl($adminPrispevek)
 	{
@@ -35,6 +37,15 @@ class AdminNakladak extends Nette\Object
 			$allUrls = $this->dejCiVyrobSeznamUrl($adminPrispevek);
 			$this->allMenus = $adminMenu->vyrobPoleVsech($allUrls);
 			return $this->allMenus;
+		}
+	}
+	public function dejCiVyrobSeznamPresenteru($adminPrispevek)
+	{
+		if ($this->allPresenters !== NULL) {
+			return $this->allPresenters;
+		} else {
+			$this->allPresenters = $adminPrispevek->vyrobPolePresenteru();
+			return $this->allPresenters;
 		}
 	}
 

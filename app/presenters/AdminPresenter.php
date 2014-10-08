@@ -3,22 +3,17 @@
 namespace App\Presenters;
 
 use Nette,
-	App\Model;
+	App\Model,
+	Nette\Application\UI\Form,
+	Nette\Utils\Html;
 
 
 /**
  * Homepage presenter.
  */
-class AdminPresenter extends BasePresenter
+class AdminPresenter extends BaseAdminPresenter
 {
 
-	/** @var Model\AdminNakladak @inject */
-	public $adminNakladak;
-	/** @var Model\AdminPrispevek @inject */
-	public $adminPrispevek;
-	/** @var Model\AdminMenu @inject */
-	public $adminMenu;
-	
 	public function startup()
 	{
 		parent::startup();
@@ -28,10 +23,6 @@ class AdminPresenter extends BasePresenter
 		}
 	}
 	
-	public function beforeRender()
-	{
-		parent::beforeRender();
-	}	
 	public function actionNahled()
 	{
 		$link = $this->mujPrispevek->sestavLink($this->getParameter('cislo'));
