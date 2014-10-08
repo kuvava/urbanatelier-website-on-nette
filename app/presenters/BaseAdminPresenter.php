@@ -57,19 +57,8 @@ class BaseAdminPresenter extends BasePresenter
 			'd' => 'Jsi v koncích?'
 			);
 		$pole3 = $this->adminNakladak->dejCiVyrobSeznamUrl($this->adminPrispevek);
-		$form->addGroup('Nápověda k formátovacímu editoru Texy2');
-		$form->addSelect('url_napoveda', 'Generátor aktivních odkazů na jiné části Tvého webu:', $pole3)
-			->setPrompt('Vyber článek pro vygenerování formátovací zkratky, kterou vložíš, kam potřebuješ')
-			->setAttribute('class','nahled ah1')
-			->setOption('description', html::el('strong')->setClass('ah1')->setHtml('<span></span><span class="ah1">'))
-			->setOmitted;
-		$form->addButton('preview2', 'Ukázat odkazovaný článek v novém okně')
-			->setAttribute('class','nahled')
-			->setOption('description', html::el('div')->setClass('ah1'));
-		$form->addRadioList('url_napoveda2', 'Zajímá Tě, jak vyrobit odkaz na cizí stránky?', array(1=>'ano', 0=>'ne'))
-			->addCondition(form::EQUAL, 1)->toggle('ah2-x');
-		$form['url_napoveda2']->setOption('description', html::el('div')->id('ah2-x')->setHtml('<p><strong>Odkazy mimo Tvůj web:</strong><p><p>Nalezneš zajímavou stránku kdekoliv na webu, z horního adresního řádku prohlížeče zkopíruješ přesnou adresu dané stránky a vložíš ji do textu do hranatých závorek. A před hranaté závorky nalepíš bez mezer dvojtečku a před tu dvojtečku bez mezery uvozovky a do uvozovek aktivní text, kterým se Ti hodí odkazovat</p><p>Příklad:</p><p>Včera jsem surfoval na internetu a na stránkách pan Petra Hranateho jsem objevil geniální článek o <strong>"velkých kulatých rybách v Amazonii":[http://www.hranaty.com/vylety/kulate-ryby/index.php?n=12]</strong>. Na stránce pana Hranatého naleznete i mnoho dalších zajímavých příběhů a informací.</p><p>Použitý tvar odkazu:<br><strong>"velkých kulatých rybách v Amazonii":[http://www.hranaty.com/vylety/kulate-ryby/index.php?n=12]</strong></p>'))
-			->setOmitted;
+		$form->addGroup('Nápověda k formátovacímu editoru Texy2')
+			->setOption('embedNext',true);
 		$form->addSelect('help1', 'Jaké formátování by se Ti mohlo hodit v článku (odstavce, nadpisy, tučné písmo, aktivní odkazy, ...):', $pole2)
 			->setPrompt('Zvol, co Tě zajímá...')
 			->setOmitted;
@@ -95,7 +84,31 @@ class BaseAdminPresenter extends BasePresenter
 				)
 			)
 		);
-		$form['help1']->addCondition(form::EQUAL, 'd')->toggle('ah2-x');
+		
+		$form->addRadioList('url_napoveda2', 'Zajímá Tě, jak vyrobit odkaz na cizí stránky?', array(1=>'ano', 0=>'ne'))
+			->addCondition(form::EQUAL, 1)->toggle('ah2-x');
+		$form['url_napoveda2']->setOption('description', html::el('div')->id('ah2-x')->setHtml('<p><strong>Odkazy mimo Tvůj web:</strong><p><p>Nalezneš zajímavou stránku kdekoliv na webu, z horního adresního řádku prohlížeče zkopíruješ přesnou adresu dané stránky a vložíš ji do textu do hranatých závorek. A před hranaté závorky nalepíš bez mezer dvojtečku a před tu dvojtečku bez mezery uvozovky a do uvozovek aktivní text, kterým se Ti hodí odkazovat</p><p>Příklad:</p><p>Včera jsem surfoval na internetu a na stránkách pana Petra Hranateho jsem objevil geniální článek o <strong>"velkých kulatých rybách v Amazonii":[http://www.hranaty.com/vylety/kulate-ryby/index.php?n=12]</strong>. Na stránce pana Hranatého naleznete i mnoho dalších zajímavých příběhů a informací.</p><p>Použitý tvar odkazu:<br><strong>"velkých kulatých rybách v Amazonii":[http://www.hranaty.com/vylety/kulate-ryby/index.php?n=12]</strong></p>'))
+			->setOmitted;
+		$form->addGroup('Generátor aktivních odkazů na jiné části Tvého webu');
+		$form->addText('textodkazu', 'Slova, kterými odkazuješ:',70)
+			->setAttribute('class','ah1')
+			->setDefaultValue('Klikací slova');
+		$form->addSelect('url_napoveda', 'Cíl odkazu (jiná stránka na Tvém webu):', $pole3)
+			->setPrompt('Vyber článek pro vygenerování formátovací zkratky, kterou vložíš, kam potřebuješ')
+			->setAttribute('class','nahled ah1')
+			->setOption('description', html::el('strong')->setClass('ah1')->setHtml('<span></span><span class="ah1">'))
+			->setOmitted;
+		$form->addButton('preview2', 'Ukázat odkazovaný článek v novém okně')
+			->setAttribute('class','nahled');
+		$form->addButton('generurl','Generovat odkaz')
+			->setAttribute('class','ah1')
+			->setOption('description', html::el('div')->setClass('ah1'));
+		
+		
+		$form['help1']->addCondition(form::EQUAL, 'a')->toggle('ah2-a');
+		$form['help1']->addCondition(form::EQUAL, 'b')->toggle('ah2-b');
+		$form['help1']->addCondition(form::EQUAL, 'c')->toggle('ah2-c');
+		$form['help1']->addCondition(form::EQUAL, 'd')->toggle('ah2-d');
 		
 		
 		
