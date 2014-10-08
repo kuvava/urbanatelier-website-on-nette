@@ -59,14 +59,14 @@ class BaseAdminPresenter extends BasePresenter
 			);
 		$pole3 = $this->adminNakladak->dejCiVyrobSeznamUrl($this->adminPrispevek);
 		$form->addGroup('Nápověda k formátovacímu editoru Texy2');
-		$form->addSelect('url_napoveda', 'Generátor aktivních odkazů na jiné články Tvého webu:', $pole3)
+		$form->addSelect('url_napoveda', 'Generátor aktivních odkazů na jiné části Tvého webu:', $pole3)
 			->setPrompt('Vyber článek pro vygenerování formátovací zkratky, kterou vložíš, kam potřebuješ')
 			->setAttribute('class','nahled ah1')
 			->setOption('description', html::el('strong')->setClass('ah1')->setHtml('<span></span><span class="ah1">'))
 			->setOmitted;
-		$form->addButton('preview2', 'Ukázat odkazovaný článek v novém okně')
+		$form->addButton('preview2', 'Ukázat zvolený článek v novém okně')
 			->setAttribute('class','nahled')
-			->setOption('description', html::el('div')->setClass('ah1')->setHtml('<span></span><span class="ah1"></span><span></span>'));
+			->setOption('description', html::el('div')->setClass('ah1'));
 		$form->addSelect('help1', 'Jaké formátování by se Ti mohlo hodit v článku (odstavce, nadpisy, tučné písmo, aktivní odkazy, ...):', $pole2)
 			->setPrompt('Zvol, co Tě zajímá...')
 			->setOmitted;

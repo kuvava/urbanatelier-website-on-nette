@@ -31,7 +31,10 @@ strong.ah1 span{
 	font-weight: normal;
 	font-style: italic;
 }
-strong.ah1 span.ah1{
+strong.ah1 span.ah1, div.ah1 span{
 	font-weight: bold;
 	font-style: normal;
+}
+div.ah1 span.ah1{
+	font-weight: normal;
 }
