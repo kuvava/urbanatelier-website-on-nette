@@ -47,15 +47,14 @@ class BaseAdminPresenter extends BasePresenter
 		$form->addTextArea('texy', 'Text (nápovědu k formátování nalezneš dole):', 100, 20);
 		$form->addGroup('Volby odeslání');
 		$form->addCheckbox('smazano', 'Znepřístupnit článek pro uživatele bez administrátorských práv?')->setOption('description', html::el('small')->setHtml('(Ukáže se jim "stránka nenalezena", navíc položka zmizí z menu včetně podpoložek...)'));
-		$form->addSubmit('preview', 'Nezávazný náhled')->onClick[] = array($this, 'submittedPreviewEditArticleForm');
+		$form->addSubmit('preview', 'Nezávazný náhled editovaného článku')->onClick[] = array($this, 'submittedPreviewEditArticleForm');
 		$form->addSubmit('save', 'Uložit')->onClick[] = array($this, 'submittedSaveEditArticleForm');
 
 		$pole2 = array(
 			'a' => 'Odstavce a odřádkování',
 			'b' => 'Tučné písmo, kurzíva, ...',
-			'c' => 'Nadpisy, podnadpisy, ',
-			'd' => 'Aktivní odkazy v textu',
-			'e' => 'Jsi v koncích?'
+			'c' => 'Nadpisy, podnadpisy, ...',
+			'd' => 'Jsi v koncích?'
 			);
 		$pole3 = $this->adminNakladak->dejCiVyrobSeznamUrl($this->adminPrispevek);
 		$form->addGroup('Nápověda k formátovacímu editoru Texy2');
@@ -64,13 +63,39 @@ class BaseAdminPresenter extends BasePresenter
 			->setAttribute('class','nahled ah1')
 			->setOption('description', html::el('strong')->setClass('ah1')->setHtml('<span></span><span class="ah1">'))
 			->setOmitted;
-		$form->addButton('preview2', 'Ukázat zvolený článek v novém okně')
+		$form->addButton('preview2', 'Ukázat odkazovaný článek v novém okně')
 			->setAttribute('class','nahled')
 			->setOption('description', html::el('div')->setClass('ah1'));
+		$form->addRadioList('url_napoveda2', 'Zajímá Tě, jak vyrobit odkaz na cizí stránky?', array(1=>'ano', 0=>'ne'))
+			->addCondition(form::EQUAL, 1)->toggle('ah2-x');
+		$form['url_napoveda2']->setOption('description', html::el('div')->id('ah2-x')->setHtml('<p><strong>Odkazy mimo Tvůj web:</strong><p><p>Nalezneš zajímavou stránku kdekoliv na webu, z horního adresního řádku prohlížeče zkopíruješ přesnou adresu dané stránky a vložíš ji do textu do hranatých závorek. A před hranaté závorky nalepíš bez mezer dvojtečku a před tu dvojtečku bez mezery uvozovky a do uvozovek aktivní text, kterým se Ti hodí odkazovat</p><p>Příklad:</p><p>Včera jsem surfoval na internetu a na stránkách pan Petra Hranateho jsem objevil geniální článek o <strong>"velkých kulatých rybách v Amazonii":[http://www.hranaty.com/vylety/kulate-ryby/index.php?n=12]</strong>. Na stránce pana Hranatého naleznete i mnoho dalších zajímavých příběhů a informací.</p><p>Použitý tvar odkazu:<br><strong>"velkých kulatých rybách v Amazonii":[http://www.hranaty.com/vylety/kulate-ryby/index.php?n=12]</strong></p>'))
+			->setOmitted;
 		$form->addSelect('help1', 'Jaké formátování by se Ti mohlo hodit v článku (odstavce, nadpisy, tučné písmo, aktivní odkazy, ...):', $pole2)
 			->setPrompt('Zvol, co Tě zajímá...')
 			->setOmitted;
-		$form['help1']->addCondition(form::EQUAL, 'd')->toggle('ah2');
+		$form['help1']->setOption('description', html::el('div')
+			->add(html::el('p')->id('ah2-a')
+				->setHtml(
+				'blablabla  aaaaaa'
+				)
+			)
+			->add(html::el('p')->id('ah2-b')
+				->setHtml(
+				'blablabla   bbbbbb'
+				)
+			)
+			->add(html::el('p')->id('ah2-c')
+				->setHtml(
+				'blablabla   ccccccc'
+				)
+			)
+			->add(html::el('p')->id('ah2-d')
+				->setHtml(
+				'blablabla ddddd'
+				)
+			)
+		);
+		$form['help1']->addCondition(form::EQUAL, 'd')->toggle('ah2-x');
 		
 		
 		

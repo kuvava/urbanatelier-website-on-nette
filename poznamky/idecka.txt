@@ -1,5 +1,5 @@
 ah1		admin helper1 - pomůcka na zobrazování aktuální délky textu u inputů s maxlength
-ah2		admin helper2 - nápověda k odkazům texy
+ah2,-	admin helper2 - nápověda k odkazům texy
 all		obalovaci <div> pro téměř celé <body> (vyjma počátečních a koncových javascriptů)
 foot	patička webu
 head	vrchní část webu (hlavička, menu a tak)
