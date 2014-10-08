@@ -36,8 +36,14 @@ $('#ah1').click(function(){
 });
 $('input').keyup(function(){
 	if(selMaxInput != null){
-	console.log(selMaxInput.val().length);
 	$('#ah1').find('span:last').text('').append(' ' + selMaxInput.val().length);
 	}
+});
+$('input').bind('paste', function(){
+	window.setTimeout(function(){
+		if(selMaxInput != null){
+		$('#ah1').find('span:last').text('').append(' ' + selMaxInput.val().length);
+		}
+	}, 200);
 });
 });

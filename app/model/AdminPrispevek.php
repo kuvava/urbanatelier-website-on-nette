@@ -2,7 +2,8 @@
 
 namespace App\Model;
 
-use Nette;
+use Nette,
+	Nette\Utils\Strings;
 
 
 /**
