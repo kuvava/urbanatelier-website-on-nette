@@ -29,7 +29,7 @@ class AdminPrispevek extends Nette\Object
 		$pole = NULL;
 		$table = $this->database->table('prispevek')->order('presenter_id, url1, url2');
 		foreach ($table as $row) {
-			$pole[$row->id] = 'http://' . $row->ref('presenter')->jmeno . '.atelierurban.cz/' . $row->url1 . (($row->url1 === '') ? '' : '/') . $row->url2 . (($row->url2 === '') ? '' : '/') . (($row->smazano > 0) ? ' (SMAZÁNO)' : '');
+			$pole[$row->id] = 'http://' . Strings::lower($row->ref('presenter')->jmeno) . '.atelierurban.cz/' . $row->url1 . (($row->url1 === '') ? '' : '/') . $row->url2 . (($row->url2 === '') ? '' : '/') . (($row->smazano > 0) ? ' (SMAZÁNO)' : '');
 		}
 		//\Tracy\Debugger::FireLog($pole);
 		return $pole;
@@ -39,7 +39,7 @@ class AdminPrispevek extends Nette\Object
 		$pole = NULL;
 		$table = $this->database->table('presenter')->order('jmeno');
 		foreach ($table as $row) {
-			$pole[$row->id] = $row->jmeno;
+			$pole[$row->id] = Strings::lower($row->jmeno);
 		}
 		
 		return $pole;
