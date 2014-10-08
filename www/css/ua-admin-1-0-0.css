@@ -23,3 +23,15 @@
 	text-align: right;
 	text-decoration: underline;
 }
+
+strong.ah1{
+	display: inline-block;
+}
+strong.ah1 span{
+	font-weight: normal;
+	font-style: italic;
+}
+strong.ah1 span.ah1{
+	font-weight: bold;
+	font-style: normal;
+}

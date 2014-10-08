@@ -7,6 +7,17 @@ $(':button.nahled').click(function(){
 		alert('Vyber prosím konkrétní článek k přechodu na náhled.');
 	}	
 });
+$('select.ah1').change(function(){
+	var cislo = $(this).val();
+	var text1 = '
+
+'
+	var menenyStrong = $(this).closest('form').find('strong.ah1:first');
+	menenyStrong.find('span:first').text('').append('vlož do textu:&nbsp;&nbsp; ');
+	menenyStrong.find('span.ah1').text('').append('"klikací slova":[xxx' + cislo + ']');
+	var menenyDiv = $(this).closest('form').find('div.ah1:first');
+	menenyDiv.find('span:first').text('').append(text1);
+});
 var selMaxInput = null;
 $('input[maxlength]').focus(function(){
 	selMaxInput = $(this);
