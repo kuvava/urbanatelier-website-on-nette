@@ -16,12 +16,13 @@
 	color: #000;
 	padding: 0.3em; padding: 0.3rem;
 	z-index: 1000;
-	cursor: pointer;
+	cursor: move;
 }
 #ah1 div{
 	font-size: 0.8em;
 	text-align: right;
 	text-decoration: underline;
+	cursor: pointer;
 }
 
 strong.ah1{
@@ -38,3 +39,36 @@ strong.ah1 span.ah1, div.ah1 span{
 div.ah1 span.ah1{
 	font-weight: normal;
 }
+
+#text #hra{
+	text-align: left;
+	width: 1500px;
+}
+#text #hra ul{
+	min-width: 50px;
+	min-height: 20px;
+	padding: 0.2em; padding: 0.2rem;
+	background-color: #7b7b7b;
+	display: inline-block;
+	margin: 0 0.5em;margin: 0 0.5rem;
+	margin-left: 2em;margin-left: 2rem;
+	vertical-align: middle;
+	list-style-type: none;
+}
+#text #hra ul small{
+	font-size: 0.8em;
+}
+#text #hra ul li{
+	margin: 0.5em; margin: 0.5rem;
+	padding: 0.5em; padding: 0.5rem;
+	background-color: #faf1c2;
+	font-weight: bold;}
+#text #hra ul#nabidka li{
+	display: inline-block;
+}
+#text #hra ul#nabidka {
+	height: 14em; height: 14rem;
+	overflow-y: scroll;
+	display: block;
+}
+#text #hra ul#nabidka li.hra-place, #text #hra ul#piskoviste li.hra-place { height: 0.3em; line-height: 0.3em; background-color: #39e31c;}

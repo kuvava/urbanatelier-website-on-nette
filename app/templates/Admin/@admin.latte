@@ -1,8 +1,10 @@
 {layout '../@layout.latte'}
-{block head}<link rel="stylesheet" media="screen,projection,tv" href="{$basePath}/css/ua-admin-1-0-0.css">{/block}
+{block head}<link rel="stylesheet" media="screen,projection,tv" href="{$basePath}/css/ua-admin-1-0-0.css">
+<link rel="stylesheet" media="screen,projection,tv" href="{$basePath}/css/jquery-ui.css">{/block}
 {block helpers}<div id="ah1"><div>skrýt</div><br>Max délka:<span></span><br>Aktuálně napsáno:<span></span></div>{/block}
 {block h1}<h1>&nbsp;<br>ADMINISTRACE<br>&nbsp;</h1>{/block}
 {block scripts}
 {include parent}
+<script src="{$basePath}/js/jquery-ui.min.js"></script>
 <script src="{$basePath}/js/admin.js"></script>
 {/block}

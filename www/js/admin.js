@@ -1,4 +1,6 @@
 $(document).ready(function(){
+var ah1DraggedDistXY = [0,0];
+var startDragXY = [null,null];
 function generujDomaciOdkaz(danySelect){
 	var cislo = $(danySelect).val();
 	if (cislo < 1){
@@ -57,16 +59,31 @@ $('input[maxlength]').focus(function(){
 		})
 	obj2.stop();
 	obj2.animate({
-		"top": (d1.top - 20 - v2) + "px",
-		"left": d1.left + "px",
+		"top": Math.max((d1.top - 20 - v2 + ah1DraggedDistXY[1]),0) + "px",
+		"left": Math.max((d1.left + ah1DraggedDistXY[0]),0) + "px",
 		"opacity": 1
 		}, 1000)		
 }).blur(function(){
 	selMaxInput = null;
 	$('#ah1').animate({"opacity" : 0}, 700, function(){$(this).css("display", "none");});
 });
-$('#ah1').click(function(){
-	$(this).animate({"opacity" : 0}, 700, function(){$(this).css("display", "none");});
+$('input').not('[maxlength]').focus(function(){
+	selMaxInput = null;
+	$('#ah1').animate({"opacity" : 0}, 700, function(){$(this).css("display", "none");});
+});
+$('#ah1').draggable({
+	start: function() {
+		$(this).stop();
+		startDragXY = [event.pageX, event.pageY];
+	},
+	stop: function() {
+		ah1DraggedDistXY = [event.pageX - startDragXY[0] + ah1DraggedDistXY[0], event.pageY - startDragXY[1] + ah1DraggedDistXY[1]];
+		startDragXY = [null,null];
+	}
+});
+$('#ah1 div:first').click(function(){
+	ah1DraggedDistXY = [0,0];
+	$('#ah1').animate({"left": 0, "top": 0, "opacity": 0}, 700, function(){$(this).css("display", "none");});
 });
 $('input').keyup(function(){
 	if(selMaxInput != null){
@@ -80,4 +97,13 @@ $('input').bind('paste', function(){
 		}
 	}, 200);
 });
+
+
+
+	$( "#hra ul" ).sortable({
+	revert: true,
+	connectWith: 'ul',
+	placeholder: "hra-place",
+	opacity: 0.5
+	});
 });
