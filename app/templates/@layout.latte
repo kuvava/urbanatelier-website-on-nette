@@ -23,9 +23,9 @@
 {block helpers}{/block helpers}
 <div id="all">
 	<div n:if="$user->loggedIn" id="user">
-		Přihlášený uživatel:<br><strong>{$mujNakladak->uzivatel['username']}</strong> {if $user->isInRole('admin')}(administrátor){/if}<br>
+		Přihlášený uživatel:<br><strong>{$mujNakladak->uzivatel['username']}</strong> {if $user->isInRole('admin')}(administrátor)<br>{ifset $httpRequest}{$httpRequest->getRemoteAddress()}<br>{/ifset}{/if}
 		<a n:href="Uzivatel:odhlas"><strong>Odhlásit se</strong></a><br><br>
-		<a n:href="Admin:zobraz"><strong>Spravovat stránky</strong></a>
+		<a n:href="Admin:zobraz" n:if="$user->isInRole('admin')"><strong>Spravovat stránky</strong></a>
 	</div>
 
 	{block hlava}

@@ -23,6 +23,12 @@ class AdminPresenter extends BaseAdminPresenter
 		}
 	}
 	
+	public function beforeRender()
+	{
+		parent::beforeRender();
+		$this->template->httpRequest = $this->context->getService('httpRequest');
+	}
+	
 	public function actionNahled()
 	{
 		$link = $this->mujPrispevek->sestavLink($this->getParameter('cislo'));
