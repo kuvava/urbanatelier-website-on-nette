@@ -2,7 +2,8 @@
 
 namespace App\Model;
 
-use Nette;
+use Nette,
+	Nette\Utils\Strings;
 
 
 /**
@@ -11,34 +12,47 @@ use Nette;
 class MojeTexy extends Nette\Object
 {
 
+	/** @var Nette\Database\Context */
+	private $database;
+	public function __construct(Nette\Database\Context $database)
+	{
+		$this->database = $database;
+	}
+	
 	/**
 	* 
 	* zde se uchovává objekt \Texy jako služba
 	* 
 	*/
-	private static $texy;
+	private $texy;
 	
-	public static function dodejTexy()
+	public function dodejTexy()
 	{
-		if (isset(self::$texy)) {
-			return self::$texy;
+		if (isset($this->texy)) {
+			return $this->texy;
 		} else {
-			self::$texy = new \Texy();
-			self::$texy = self::nastaveni(self::$texy);
-			return self::$texy;
+			$this->texy = new \Texy();
+			$this->texy = $this->nastaveni($this->texy);
+			return $this->texy;
 		}
 	}
 	
-	private static function nastaveni($texy)
+	private function nastaveni($texy)
 	{
 
 		// můžeme jej nakonfigurovat
 		$texy->imageModule->root  = '/images/';
-		// $texy->headingModule->top = 2;
+		$texy->headingModule->top = 2;
 		// $texy->encoding = 'utf-8';
 		
 		return $texy;
 
+	}
+	
+	public function filtrujReference($string, $save = TRUE)
+	{
+		$results = Strings::matchAll($string, '~"[^"]+":\[xxx([0-9]+)\]~');
+		\Tracy\Debugger::FireLog($results);
 	}
 
 }

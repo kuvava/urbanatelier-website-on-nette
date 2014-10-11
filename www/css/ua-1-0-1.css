@@ -7,7 +7,7 @@ display:block;}
 display:inline-block}
 #m1,#user{
 position:absolute;}
-#all{
+#all, .flash{
 position:relative;}
 #m0 #m1 #m2{
 position:static;}
@@ -19,6 +19,8 @@ z-index:15;}
 top:0px;
 right:0px;
 z-index:25;}
+.flash{
+z-index:1000;}
 #all{
 max-width:1400px;
 min-width:800px;}

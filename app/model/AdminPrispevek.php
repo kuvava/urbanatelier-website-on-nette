@@ -19,6 +19,10 @@ class AdminPrispevek extends Nette\Object
 		$this->database = $database;
 	}
 
+	public function dodejDatabazi()
+	{
+		return $this->database;
+	}
 	/**
 	* 
 	* nutno doplnit
@@ -29,7 +33,7 @@ class AdminPrispevek extends Nette\Object
 		$pole = NULL;
 		$table = $this->database->table('prispevek')->order('presenter_id, url1, url2');
 		foreach ($table as $row) {
-			$pole[$row->id] = 'http://' . Strings::lower($row->ref('presenter')->jmeno) . '.atelierurban.cz/' . $row->url1 . (($row->url1 === '') ? '' : '/') . $row->url2 . (($row->url2 === '') ? '' : '/') . (($row->smazano > 0) ? ' (SMAZÁNO)' : '');
+			$pole[$row->id] = (($row->smazano > 0) ? 'SKRYTO:' : '') . Strings::lower($row->ref('presenter')->jmeno) . '/' . $row->url1 . (($row->url1 === '') ? '' : '/') . $row->url2 . (($row->url2 === '') ? '' : '/');
 		}
 		//\Tracy\Debugger::FireLog($pole);
 		return $pole;
@@ -43,6 +47,10 @@ class AdminPrispevek extends Nette\Object
 		}
 		
 		return $pole;
+	}
+	public function ulozNahled($values)
+	{
+		$this->database->table('nahled')->insert($values);
 	}
 
 }

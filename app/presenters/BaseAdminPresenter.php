@@ -20,6 +20,8 @@ class BaseAdminPresenter extends BasePresenter
 	public $adminPrispevek;
 	/** @var Model\AdminMenu @inject */
 	public $adminMenu;
+	/** @var Model\MojeTexy @inject */
+	public $mojeTexy;
 
 
 	protected function createComponentEditArticleForm()
@@ -30,6 +32,7 @@ class BaseAdminPresenter extends BasePresenter
 		$form->addGroup('URL adresa');
 		$form->addSelect('presenter_id', 'Subdoména:', $pole)
 			->setPrompt('Vyber jednu z veřejných subdomén')
+			->setDefaultValue(1)
 			->setRequired('Musíš si vybrat konkrétní subdoménu');
 		$form->addText('url1', '1. část URL adresy:', 50, 100)
 			->setOption('description', html::el('small')->setHtml('Ve výsledcích googlu se malým písmem zobrazuje i adresa. Zkušení uživatelé se podle ní mohou rozhodnout o kliknutí/nekliknutí na výsledek...<p>Jinak: google v pohodě skloňuje, takže fotografovani-svatba je pro něj relevatní k "fotografování svateb"... Ale google nemění slovní druhy: fotografovani->fotografický je už pro něj něco jiného...</p>'))
@@ -50,18 +53,18 @@ class BaseAdminPresenter extends BasePresenter
 		$form->addSubmit('preview', 'Nezávazný náhled editovaného článku')->onClick[] = array($this, 'submittedPreviewEditArticleForm');
 		$form->addSubmit('save', 'Uložit')->onClick[] = array($this, 'submittedSaveEditArticleForm');
 
-		$pole2 = array(
+		/*$pole2 = array(
 			'a' => 'Odstavce a odřádkování',
 			'b' => 'Tučné písmo, kurzíva, ...',
 			'c' => 'Nadpisy, podnadpisy, ...',
 			'd' => 'Jsi v koncích?'
-			);
+			);*/
 		$pole3 = $this->adminNakladak->dejCiVyrobSeznamUrl($this->adminPrispevek);
 		$form->addGroup('Nápověda k formátovacímu editoru Texy2')
-			->setOption('embedNext',true);
-		$form->addSelect('help1', 'Jaké formátování by se Ti mohlo hodit v článku (odstavce, nadpisy, tučné písmo, aktivní odkazy, ...):', $pole2)
+			->setOption('embedNext',1);
+		/*$form->addSelect('help1', 'Jaké formátování by se Ti mohlo hodit v článku (odstavce, nadpisy, tučné písmo, aktivní odkazy, ...):', $pole2)
 			->setPrompt('Zvol, co Tě zajímá...')
-			->setOmitted;
+			->setOmitted();
 		$form['help1']->setOption('description', html::el('div')
 			->add(html::el('p')->id('ah2-a')
 				->setHtml(
@@ -83,32 +86,35 @@ class BaseAdminPresenter extends BasePresenter
 				'blablabla ddddd'
 				)
 			)
-		);
+		);*/
 		
 		$form->addRadioList('url_napoveda2', 'Zajímá Tě, jak vyrobit odkaz na cizí stránky?', array(1=>'ano', 0=>'ne'))
 			->addCondition(form::EQUAL, 1)->toggle('ah2-x');
 		$form['url_napoveda2']->setOption('description', html::el('div')->id('ah2-x')->setHtml('<p><strong>Odkazy mimo Tvůj web:</strong><p><p>Nalezneš zajímavou stránku kdekoliv na webu, z horního adresního řádku prohlížeče zkopíruješ přesnou adresu dané stránky a vložíš ji do textu do hranatých závorek. A před hranaté závorky nalepíš bez mezer dvojtečku a před tu dvojtečku bez mezery uvozovky a do uvozovek aktivní text, kterým se Ti hodí odkazovat</p><p>Příklad:</p><p>Včera jsem surfoval na internetu a na stránkách pana Petra Hranateho jsem objevil geniální článek o <strong>"velkých kulatých rybách v Amazonii":[http://www.hranaty.com/vylety/kulate-ryby/index.php?n=12]</strong>. Na stránce pana Hranatého naleznete i mnoho dalších zajímavých příběhů a informací.</p><p>Použitý tvar odkazu:<br><strong>"velkých kulatých rybách v Amazonii":[http://www.hranaty.com/vylety/kulate-ryby/index.php?n=12]</strong></p>'))
-			->setOmitted;
+			->setOmitted();
 		$form->addGroup('Generátor aktivních odkazů na jiné části Tvého webu');
-		$form->addText('textodkazu', 'Slova, kterými odkazuješ:',70)
+		$form->addText('klikaci_slova', 'Slova, kterými odkazuješ:',70)
 			->setAttribute('class','ah1')
-			->setDefaultValue('Klikací slova');
+			->setDefaultValue('Klikací slova')
+			->setOmitted();
 		$form->addSelect('url_napoveda', 'Cíl odkazu (jiná stránka na Tvém webu):', $pole3)
 			->setPrompt('Vyber článek pro vygenerování formátovací zkratky, kterou vložíš, kam potřebuješ')
 			->setAttribute('class','nahled ah1')
 			->setOption('description', html::el('strong')->setClass('ah1')->setHtml('<span></span><span class="ah1">'))
-			->setOmitted;
+			->setOmitted();
 		$form->addButton('preview2', 'Ukázat odkazovaný článek v novém okně')
-			->setAttribute('class','nahled');
+			->setAttribute('class','nahled')
+			->setOmitted();
 		$form->addButton('generurl','Generovat odkaz')
 			->setAttribute('class','ah1')
-			->setOption('description', html::el('div')->setClass('ah1'));
+			->setOption('description', html::el('div')->setClass('ah1'))
+			->setOmitted();
 		
 		
-		$form['help1']->addCondition(form::EQUAL, 'a')->toggle('ah2-a');
+		/*$form['help1']->addCondition(form::EQUAL, 'a')->toggle('ah2-a');
 		$form['help1']->addCondition(form::EQUAL, 'b')->toggle('ah2-b');
 		$form['help1']->addCondition(form::EQUAL, 'c')->toggle('ah2-c');
-		$form['help1']->addCondition(form::EQUAL, 'd')->toggle('ah2-d');
+		$form['help1']->addCondition(form::EQUAL, 'd')->toggle('ah2-d');*/
 		
 		
 		
@@ -120,16 +126,25 @@ class BaseAdminPresenter extends BasePresenter
 	public function submittedPreviewEditArticleForm(Nette\Forms\Controls\SubmitButton $submit)
 	{
 		$form = $submit->getForm();
-		$values = $form->getValues(TRUE);
-		\Tracy\Debugger::FireLog($form->submitted->name);
-		\Tracy\Debugger::FireLog($values);
+		$values = $form->getValues();
+		$isSame = $this->adminPrispevek->dodejDatabazi()->table('prispevek')
+			->where('presenter_id = ?', $values['presenter_id'])
+			->where('url1 = ?', $values['url1'])
+			->where('url2 = ?', $values['url2'])
+			->count();
+		if ($isSame > 0) {
+			$this->flashMessage('Zadaná kombinace url adres 1. a 2. části a subdomény již v databázi uložených článků existuje. Pro zdárné uložení tohoto článku budete tedy potřebovat buď změnit některou z částí url adresy právě nahlíženého rozpracovaného článku, nebo budete muset změnit některou část url adresy u <a href="' . $this->link($this->adminPrispevek->dodejDatabazi()->table('presenter')->get($values['presenter_id'])->jmeno . ':' . 'zobraz', array('url1' => $values['url1'], 'url2' => $values['url2'])) . '" target="_blank">již dříve uloženého článku</a>.', 'flash-red');
+		}
+		$this->mojeTexy->filtrujReference($values['texy'], FALSE);
+		$values['html'] = $this->mojeTexy->dodejTexy()->process("\r\n" . $values['texy']);
+		$this->adminPrispevek->ulozNahled($values);
 		$this->redirect('this');
 	}
 	
 	public function submittedSaveEditArticleForm(Nette\Forms\Controls\SubmitButton $submit)
 	{
 		$form = $submit->getForm();
-		$values = $form->getValues(TRUE);
+		$values = $form->getValues();
 		\Tracy\Debugger::FireLog($form->submitted->name);
 		\Tracy\Debugger::FireLog($values);
 		$this->redirect('this');

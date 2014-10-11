@@ -33,6 +33,7 @@ services:
 	- App\Model\MojeMenu
 	- App\Model\AdminMenu
 	- App\Model\MujUzivatel
+	- App\Model\MojeTexy
 	- App\Model\UserManager
 	- App\RouterFactory
 	router: @App\RouterFactory::createRouter
