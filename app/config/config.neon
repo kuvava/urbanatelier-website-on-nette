@@ -20,20 +20,17 @@ nette:
 	session:
 		expiration: 14 days
 		cookiePath: "/"
-		cookieDomain: ".localhost.com"
+		cookieDomain: ".%myDomain%"
 
 	debugger:
 		email: urbanovi@kuvava.cz
 
 services:
-	- App\Model\MujPrispevek
-	- App\Model\AdminPrispevek
-	- App\Model\MujNakladak
-	- App\Model\AdminNakladak
-	- App\Model\MojeMenu
-	- App\Model\AdminMenu
-	- App\Model\MujUzivatel
-	- App\Model\MojeTexy
+	- App\Model\MyUrl
+	- App\Model\MyLorry
+	- App\Model\MyMenu
+	- App\Model\MyUser
+	- App\Model\MyTexy
 	- App\Model\UserManager
 	- App\RouterFactory
 	router: @App\RouterFactory::createRouter

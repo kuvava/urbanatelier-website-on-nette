@@ -12,24 +12,39 @@ use Nette,
 abstract class BasePresenter extends Nette\Application\UI\Presenter
 {
 
-	/** @var Model\MujPrispevek @inject */
-	public $mujPrispevek;
-	/** @var Model\MojeMenu @inject */
-	public $mojeMenu;
-	/** @var Model\MujNakladak @inject */
-	public $mujNakladak;
-	/** @var Model\MujUzivatel @inject */
-	public $mujUzivatel;
+	/** @var Model\MyUrl */
+	protected $myUrl;
+	public function injectMyUrl(Model\MyUrl $myUrl)
+	{
+		$this->myUrl = $myUrl;
+	}
+	/** @var Model\MyMenu */
+	protected $myMenu;
+	public function injectMyMenu(Model\MyMenu $myMenu)
+	{
+		$this->myMenu = $myMenu;
+	}
+	/** @var Model\MyLorry */
+	protected $myLorry;
+	public function injectMyLorry(Model\MyLorry $myLorry)
+	{
+		$this->myLorry = $myLorry;
+	}
+	/** @var Model\MyUser */
+	protected $myUser;
+	public function injectMyUser(Model\MyUser $myUser)
+	{
+		$this->myUser = $myUser;
+	}
 
 	protected $presenter_id = NULL;
 	
 	public function beforeRender()
 	{
-		$this->mojeMenu->nalozMenu($this->mujNakladak);
-		$this->template->mujNakladak = $this->mujNakladak;
-		$user = $this->getUser();
-		if ($user->isLoggedIn()) {
-			$this->mujUzivatel->nalozUzivatele($this->mujNakladak, $user->id);
+		$this->myLorry->setMenu();
+		$this->template->myLorry = $this->myLorry;
+		if ($this->user->isLoggedIn()) {
+			$this->myLorry->setUser($user->id);
 		}
 	}
 	
@@ -38,10 +53,10 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
 		
 	}
 	
-	protected function shootError($message = 'Omlouváme se, ale stránku nelze nalézt.<br>Kontaktujte prosím správce webu: urbanovi&#64;<!-- -->kuvava.cz<br>nebo si vyberte jiný obsah v menu.', $class = 'flash-red')
+	protected function shootError($message = 'Omlouváme se, ale stránku nelze nalézt.<br>Kontaktujte prosím správce webu: urbanovi&#64;<!-- -->kuvava.cz<br>nebo si vyberte jiný obsah v menu.', $class = 'flash-red', $errorText = 'Odkazovaný obsah nelze nalézt.')
 	{
 		$this->flashMessage($message,$class);
-		$this->error('Odkazovaný obsah nelze nalézt.');
+		$this->error($errorText);
 	}
 	
 	protected function setCustomFormRendering(Nette\Application\UI\Form $form)

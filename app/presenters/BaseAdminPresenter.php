@@ -14,19 +14,18 @@ use Nette,
 class BaseAdminPresenter extends BasePresenter
 {
 
-	/** @var Model\AdminNakladak @inject */
-	public $adminNakladak;
-	/** @var Model\AdminPrispevek @inject */
-	public $adminPrispevek;
-	/** @var Model\AdminMenu @inject */
-	public $adminMenu;
-	/** @var Model\MojeTexy @inject */
-	public $mojeTexy;
+	/** @var Model\MyTexy */
+	private $myTexy;
+	public function injectMyTexy(Model\MyTexy $myTexy)
+	{
+		$this->myTexy = $myTexy;
+	}
+
 
 
 	protected function createComponentEditArticleForm()
 	{
-		$pole = $this->adminNakladak->dejCiVyrobSeznamPresenteru($this->adminPrispevek);
+		$pole = $this->myLorry->getPresentersList();
 		//\Tracy\Debugger::FireLog($pole);		
 		$form = new Nette\Application\UI\Form;
 		$form->addGroup('URL adresa');
@@ -59,7 +58,7 @@ class BaseAdminPresenter extends BasePresenter
 			'c' => 'Nadpisy, podnadpisy, ...',
 			'd' => 'Jsi v koncích?'
 			);*/
-		$pole3 = $this->adminNakladak->dejCiVyrobSeznamUrl($this->adminPrispevek);
+		$pole3 = $this->MyLorry->getUrlsList();
 		$form->addGroup('Nápověda k formátovacímu editoru Texy2')
 			->setOption('embedNext',1);
 		/*$form->addSelect('help1', 'Jaké formátování by se Ti mohlo hodit v článku (odstavce, nadpisy, tučné písmo, aktivní odkazy, ...):', $pole2)
@@ -127,17 +126,12 @@ class BaseAdminPresenter extends BasePresenter
 	{
 		$form = $submit->getForm();
 		$values = $form->getValues();
-		$isSame = $this->adminPrispevek->dodejDatabazi()->table('prispevek')
-			->where('presenter_id = ?', $values['presenter_id'])
-			->where('url1 = ?', $values['url1'])
-			->where('url2 = ?', $values['url2'])
-			->count();
-		if ($isSame > 0) {
-			$this->flashMessage('Zadaná kombinace url adres 1. a 2. části a subdomény již v databázi uložených článků existuje. Pro zdárné uložení tohoto článku budete tedy potřebovat buď změnit některou z částí url adresy právě nahlíženého rozpracovaného článku, nebo budete muset změnit některou část url adresy u <a href="' . $this->link($this->adminPrispevek->dodejDatabazi()->table('presenter')->get($values['presenter_id'])->jmeno . ':' . 'zobraz', array('url1' => $values['url1'], 'url2' => $values['url2'])) . '" target="_blank">již dříve uloženého článku</a>.', 'flash-red');
+		$urlId = $this->myUrl->compareUrl($values['subdomain'], $values['url1'], $values['url2']);
+		if ($urlId) {
+			$this->flashMessage('Zadaná kombinace url adres 1. a 2. části a subdomény již v databázi uložených článků existuje. Pro zdárné uložení tohoto článku budete tedy potřebovat buď změnit některou z částí url adresy právě nahlíženého rozpracovaného článku, nebo budete muset změnit některou část url adresy u <a href="' . $this->link($this->myUrl->getLink($urlId)) . '" target="_blank">již dříve uloženého článku</a>.', 'flash-red');
 		}
-		$this->mojeTexy->filtrujReference($values['texy'], FALSE);
-		$values['html'] = $this->mojeTexy->dodejTexy()->process("\r\n" . $values['texy']);
-		$this->adminPrispevek->ulozNahled($values);
+		$values['html'] = $this->myTexy->process($values['texy'], FALSE);
+		$this->myUrl->savePreview($values);
 		$this->redirect('this');
 	}
 	

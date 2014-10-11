@@ -31,7 +31,7 @@ class AdminPresenter extends BaseAdminPresenter
 	
 	public function actionNahled()
 	{
-		$link = $this->mujPrispevek->sestavLink($this->getParameter('cislo'));
+		$link = $this->myUrl->getLink($this->getParameter('cislo'));
 		if ($link) {
 			$this->redirect($link['base'], $link['params']);
 		} else {
@@ -41,7 +41,7 @@ class AdminPresenter extends BaseAdminPresenter
 	
 	protected function createComponentChooseUrlForEditForm()
 	{
-		$pole = $this->adminNakladak->dejCiVyrobSeznamUrl($this->adminPrispevek);
+		$pole = $this->myLorry->getUrlsList();
 		//\Tracy\Debugger::FireLog($pole);
 		
 		$form = new Nette\Application\UI\Form;
