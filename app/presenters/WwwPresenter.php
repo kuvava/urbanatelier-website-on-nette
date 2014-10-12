@@ -16,11 +16,11 @@ class WwwPresenter extends BasePresenter
 	
 	public function beforeRender()
 	{
-		$this->myLorry->setUrl($this->presenter_id, $this->getParameter('url1'), $this->getParameter('url2'), $this->name);
-		if ((!$this->myLorry->getUrl) || (($this->myLorry->getUrl->hidden > 0) && !$this->user->isInRole('admin'))) {
+		$this->myLorry->setUrlContent($this->presenter_id, $this->getParameter('url1'), $this->getParameter('url2'), $this->name);
+		if ((!$this->myLorry->urlContent) || (($this->myLorry->urlContent->hidden > 0) && !$this->user->isInRole('admin'))) {
 				$this->shootError();
 		}
-		if ($this->user->isInRole('admin') && ($this->myLorry->getUrl->hidden > 0)) {
+		if ($this->user->isInRole('admin') && ($this->myLorry->urlContent->hidden > 0)) {
 			$force = $this->getParameter('force');
 			if ($force !== 'ano') {
 				$this->flashMessage('Tento příspěvek je pro běžné uživatele skrytý (smazaný). Nyní je zobrazen pouze v důsledku Vašich administrátorských práv...', 'flash-red');

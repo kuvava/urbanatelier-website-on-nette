@@ -8,7 +8,7 @@ use Nette;
 /**
  * Komunikace s databází ohledně položek menu
  */
-class MojeMenu extends Nette\Object
+class MyMenu extends Nette\Object
 {
 
 	/** @var Nette\Database\Context */
@@ -23,28 +23,32 @@ class MojeMenu extends Nette\Object
 	* nutno doplnit
 	* 
 	*/
-	public function nalozMenu($mN)
+	public function getMenu($urlId = NULL)
 	{
-		if ($mN->prispevek) {
-			$navig = $mN->prispevek->related('menu')->order('hlavni DESC')->limit(1)->fetch();
+		$urlId = (int)$urlId;
+		$result = array();
+		$result['menu'] = NULL;
+		$result['menuAct'] = NULL;
+		if ($urlId !== NULL && $urlId > 0) {
+			$navig = $this->database->table('menu')->where('url_id = ?', $urlId)->order('priority DESC, id ASC')->limit(1)->fetch();
 			if ($navig) {
 				$relevantId = array();
 				foreach ($this->database->table('menu')->where('lft <= ?',$navig->lft)->where('rgt >= ?', $navig->rgt) as $radek){
-					$mN->menuAktivni[] = $radek->id;
-					foreach ($this->database->table('menu')->where('lft > ?', $radek->lft)->where('rgt < ?', $radek->rgt)->where('hloubka = ?', ($radek->hloubka +1)) as $podradek){
+					$result['menuAct'][] = $radek->id;
+					foreach ($this->database->table('menu')->where('lft > ?', $radek->lft)->where('rgt < ?', $radek->rgt)->where('level = ?', ($radek->level +1)) as $podradek){
 						$relevantId[] = $podradek->id;
 					}
 				}
-				$relevantId = array_filter($relevantId);
 				if (!empty($relevantId)){
-					$mN->menu = $this->database->table('menu')->where('hloubka = ? OR id ?', 0, $relevantId)->order('lft');
+					$result['menu'] = $this->database->table('menu')->where('level = ? OR id ?', 0, $relevantId)->order('lft');
 				}
 			}
 		}
-		if (!$mN->menu) {
-			$mN->menu = $this->database->table('menu')->where('hloubka = ?', 0)->order('lft');
-			$mN->menuAktivni[] = NULL;
+		if (!$result['menu']) {
+			$result['menu'] = $this->database->table('menu')->where('level = ?', 0)->order('lft');
+			$result['menuAct'] = NULL;
 		}
+		return $result;
 	}
 
 }

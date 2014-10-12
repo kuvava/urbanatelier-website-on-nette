@@ -27,7 +27,9 @@ nette:
 
 services:
 	- App\Model\MyUrl
-	- App\Model\MyLorry
+	-
+		class: App\Model\MyLorry
+		inject: yes
 	- App\Model\MyMenu
 	- App\Model\MyUser
 	- App\Model\MyTexy
