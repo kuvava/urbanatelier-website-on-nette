@@ -8,7 +8,7 @@ use Nette;
 /**
  * Komunikace s databází ohledně příspěvku
  */
-class MyMenu extends Nette\Object
+class MyUrl extends Nette\Object
 {
 
 	/** @var Nette\Database\Context */

@@ -25,12 +25,11 @@ class MyMenu extends Nette\Object
 	*/
 	public function getMenu($urlId = NULL)
 	{
-		$urlId = (int)$urlId;
 		$result = array();
 		$result['menu'] = NULL;
 		$result['menuAct'] = NULL;
-		if ($urlId !== NULL && $urlId > 0) {
-			$navig = $this->database->table('menu')->where('url_id = ?', $urlId)->order('priority DESC, id ASC')->limit(1)->fetch();
+		if ($urlId !== NULL && (int)$urlId > 0) {
+			$navig = $this->database->table('menu')->where('url_id = ?', (int)$urlId)->order('priority DESC, id ASC')->limit(1)->fetch();
 			if ($navig) {
 				$relevantId = array();
 				foreach ($this->database->table('menu')->where('lft <= ?',$navig->lft)->where('rgt >= ?', $navig->rgt) as $radek){

@@ -8,7 +8,7 @@ use Nette;
 /**
  * Komunikace s databází ohledně zveřejnitelných údajů o přihlášeném uživateli
  */
-class MujUzivatel extends Nette\Object
+class MyUser extends Nette\Object
 {
 
 	/** @var Nette\Database\Context */
@@ -23,9 +23,10 @@ class MujUzivatel extends Nette\Object
 	* nutno doplnit
 	* 
 	*/
-	public function nalozUzivatele($mN, $userID)
+	public function getAllowedInfo($userID)
 	{
-		$mN->uzivatel['username'] = $this->database->table('uzivatel')->get($userID)->username;
+		$allowed['username'] = $this->database->table('user')->get($userID)->username;
+		return $allowed;
 	}
 
 }
