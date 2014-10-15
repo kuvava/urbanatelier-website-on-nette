@@ -18,6 +18,7 @@ class WwwPresenter extends BasePresenter
 	{
 		$this->myLorry->setUrlContent($this->presenter_id, $this->getParameter('url1'), $this->getParameter('url2'), $this->name);
 		if ((!$this->myLorry->urlContent) || (($this->myLorry->urlContent->hidden > 0) && !$this->user->isInRole('admin'))) {
+				$this->myLorry->setNullUrlContent();
 				$this->shootError();
 		}
 		if ($this->user->isInRole('admin') && ($this->myLorry->urlContent->hidden > 0)) {

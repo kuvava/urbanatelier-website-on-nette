@@ -1,10 +1,10 @@
-{ifset $mujNakladak->menu}
-{if count($mujNakladak->menu) > 0}
+{ifset $myLorry->menu}
+{if $myLorry->menu->count() > 0}
 
-{var $hloubka = -1}
+{var $level = -1}
 {var $smazaneLftRgt = array()}
 {var $i = 0}
-{foreach $mujNakladak->menu as $row}{if $row->ref('prispevek')->smazano > 0}{var $smazaneLftRgt[$i]['lft'] = $row->lft}{var $smazaneLftRgt[$i]['rgt'] = $row->rgt}{? $i++}{else}{var $bool = TRUE}{foreach $smazaneLftRgt as $keKontrole}{if ($keKontrole['lft'] <= $row->lft) && ($keKontrole['rgt'] >= $row->rgt)}{var $bool = FALSE}{/if}{breakIf !$bool}{/foreach}{if $bool}{var $link = $row->ref('prispevek')->ref('presenter')->jmeno . ':zobraz'}{if $hloubka < $row->hloubka}<menu id="m{$row->hloubka}">{else}{block |repeat:$hloubka - $row->hloubka}</li></menu>{/block}</li>{/if}<li><a n:href="$link, url1 => $row->ref('prispevek')->url1, url2 => $row->ref('prispevek')->url2" title="{trim($row->special_bublina) === '' ? $row->ref('prispevek')->bublina_odkazu : $row->special_bublina}"><div n:class="in_array($row->id, $mujNakladak->menuAktivni) ? act">{trim($row->special_napis) === '' ? $row->ref('prispevek')->napis_menu : $row->special_napis}</div></a>{var $hloubka = $row->hloubka}{/if}{/if}{/foreach}{block |repeat:$hloubka + 1}</li></menu>{/block}
+{foreach $myLorry->menu as $row}{if $row->ref('url')->hidden > 0}{var $smazaneLftRgt[$i]['lft'] = $row->lft}{var $smazaneLftRgt[$i]['rgt'] = $row->rgt}{? $i++}{else}{var $bool = TRUE}{foreach $smazaneLftRgt as $keKontrole}{if ($keKontrole['lft'] <= $row->lft) && ($keKontrole['rgt'] >= $row->rgt)}{var $bool = FALSE}{/if}{breakIf !$bool}{/foreach}{if $bool}{var $link = $row->ref('url')->ref('presenter')->name . ':zobraz'}{if $level < $row->level}<menu id="m{$row->level}">{else}{block |repeat:$level - $row->level}</li></menu>{/block}</li>{/if}<li><a n:href="$link, url1 => $row->ref('url')->url1, url2 => $row->ref('url')->url2" {var $temp = NULL}{var $temp = trim(trim($row->special_link_title) === '' ? $row->ref('url')->link_title : $row->special_link_title)}{if !($temp === NULL || $temp ==='')}title="{$temp}"{/if}><div n:class="in_array($row->id, $myLorry->menuAct) ? act">{trim($row->special_text) === '' ? $row->ref('url')->menu_text : $row->special_text}</div></a>{var $level = $row->level}{/if}{/if}{/foreach}{block |repeat:$level + 1}</li></menu>{/block}
 
 {/if}
 {/ifset}

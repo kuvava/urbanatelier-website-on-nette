@@ -11,21 +11,21 @@ use Nette;
 class MyLorry extends Nette\Object
 {
 
-	/** @var Model\MyUrl */
+	/** @var MyUrl */
 	private $myUrl;
-	public function injectMyUrl(Model\MyUrl $myUrl)
+	public function injectMyUrl(MyUrl $myUrl)
 	{
 		$this->myUrl = $myUrl;
 	}
-	/** @var Model\MyMenu */
+	/** @var MyMenu */
 	private $myMenu;
-	public function injectMyMenu(Model\MyMenu $myMenu)
+	public function injectMyMenu(MyMenu $myMenu)
 	{
 		$this->myMenu = $myMenu;
 	}
-	/** @var Model\MyUser */
+	/** @var MyUser */
 	private $myUser;
-	public function injectMyUser(Model\MyUser $myUser)
+	public function injectMyUser(MyUser $myUser)
 	{
 		$this->myUser = $myUser;
 	}
@@ -55,10 +55,14 @@ class MyLorry extends Nette\Object
 	{
 		return $this->urlContent;
 	}
+	public function setNullUrlContent()
+	{
+		$this->urlContent = NULL;
+	}
 	public function setMenu($urlId = NULL)
 	{
 		if ($this->menu === NULL) {
-			$this->resetMenu($urlId)
+			$this->resetMenu($urlId);
 		}
 		return $this;
 	}
@@ -75,6 +79,10 @@ class MyLorry extends Nette\Object
 	public function getMenu()
 	{
 		return $this->menu;
+	}
+	public function getMenuAct()
+	{
+		return $this->menuAct;
 	}
 	
 	public function setUser($userId)

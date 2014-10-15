@@ -27,7 +27,7 @@ class MyMenu extends Nette\Object
 	{
 		$result = array();
 		$result['menu'] = NULL;
-		$result['menuAct'] = NULL;
+		$result['menuAct'] = array();
 		if ($urlId !== NULL && (int)$urlId > 0) {
 			$navig = $this->database->table('menu')->where('url_id = ?', (int)$urlId)->order('priority DESC, id ASC')->limit(1)->fetch();
 			if ($navig) {
@@ -45,7 +45,7 @@ class MyMenu extends Nette\Object
 		}
 		if (!$result['menu']) {
 			$result['menu'] = $this->database->table('menu')->where('level = ?', 0)->order('lft');
-			$result['menuAct'] = NULL;
+			$result['menuAct'] = array();
 		}
 		return $result;
 	}

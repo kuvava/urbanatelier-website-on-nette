@@ -7,8 +7,8 @@
 	<meta charset="utf-8">
 	<meta name="robots" content="{$robots}" n:ifset="$robots">
 
-	<title>{ifset $mujNakladak->prispevek->titulek}{$mujNakladak->prispevek->titulek} | {/ifset}urbanatelier.cz</title>
-	<meta name="description" content="{ifset $mujNakladak->prispevek->shrnuti_vyhledavace}{$mujNakladak->prispevek->shrnuti_vyhledavace}{else}Lukáš Urban Vám zajistí návrhy interiérů, realizace, výrobu nábytku, focení svateb, fotografování dětí, portrétů, ...{/ifset}">
+	<title>{ifset $myLorry->urlContent->title}{$myLorry->urlContent->title} | {/ifset}urbanatelier.cz</title>
+	<meta name="description" content="{ifset $myLorry->urlContent->meta_descr}{$myLorry->urlContent->meta_descr}{else}Lukáš Urban Vám zajistí návrhy interiérů, realizace, výrobu nábytku, focení svateb, fotografování dětí, portrétů, ...{/ifset}">
 
 	<link rel="stylesheet" media="screen,projection,tv" href="{$basePath}/css/ua-1-0-1.css">
 	<link rel="stylesheet" media="print" href="{$basePath}/css/print.css">
@@ -23,7 +23,7 @@
 {block helpers}{/block helpers}
 <div id="all">
 	<div n:if="$user->loggedIn" id="user">
-		Přihlášený uživatel:<br><strong>{$mujNakladak->uzivatel['username']}</strong> {if $user->isInRole('admin')}(administrátor)<br>{ifset $httpRequest}{$httpRequest->getRemoteAddress()}<br>{/ifset}{/if}
+		Přihlášený uživatel:<br><strong>{$myLorry->user['username']}</strong> {if $user->isInRole('admin')}(administrátor)<br>{ifset $httpRequest}{$httpRequest->getRemoteAddress()}<br>{/ifset}{/if}
 		<a n:href="Uzivatel:odhlas"><strong>Odhlásit se</strong></a><br><br>
 		<a n:href="Admin:zobraz" n:if="$user->isInRole('admin')"><strong>Spravovat stránky</strong></a>
 	</div>
@@ -36,7 +36,7 @@
 	<div id="head">
 		<h1>{block h1}<a href="{$basePath}/" title="zpět na úvodní stránku"><img src="{$basePath}/images/loga/logo-urban-atelier.png" alt="Návrhy a realizace interiérů, výroba nábytku, fotografování svateb, umělecké fotografie - Lukáš Urban" height="215" width="783" border="0" {block menuPosScript3}onload="menuPos1()"{/block}></a>{/block h1}</h1>
 		{block menu}
-		{include 'my-components/menu.latte', mujNakladak => $mujNakladak}
+		{include 'my-components/menu.latte', myLorry => $myLorry}
 		{/block menu}
 	</div>
 	{/block hlava}
@@ -47,7 +47,7 @@
 			<div>
 				{include content}
 				{block prispevek}
-				{ifset $mujNakladak->prispevek->id}{foreach $mujNakladak->prispevek->related('hlavni_text') as $text}{$text->html|noescape}{/foreach}{/ifset}
+				{ifset $myLorry->urlContent->id}{foreach $myLorry->urlContent->related('main_text') as $text}{$text->html|noescape}{/foreach}{/ifset}
 				{/block prispevek}
 			</div>
 		</div>

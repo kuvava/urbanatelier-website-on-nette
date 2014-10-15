@@ -9,7 +9,7 @@ use Nette,
 /**
  * Texy s mým vlastním nastavením jako služba
  */
-class MojeTexy extends Nette\Object
+class MyTexy extends Nette\Object
 {
 
 	/** @var Nette\Database\Context */
