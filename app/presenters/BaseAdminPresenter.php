@@ -58,7 +58,7 @@ class BaseAdminPresenter extends BasePresenter
 			'c' => 'Nadpisy, podnadpisy, ...',
 			'd' => 'Jsi v koncích?'
 			);*/
-		$pole3 = $this->MyLorry->getUrlsList();
+		$pole3 = $this->myLorry->getUrlsList();
 		$form->addGroup('Nápověda k formátovacímu editoru Texy2')
 			->setOption('embedNext',1);
 		/*$form->addSelect('help1', 'Jaké formátování by se Ti mohlo hodit v článku (odstavce, nadpisy, tučné písmo, aktivní odkazy, ...):', $pole2)

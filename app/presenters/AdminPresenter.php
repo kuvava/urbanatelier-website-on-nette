@@ -31,7 +31,7 @@ class AdminPresenter extends BaseAdminPresenter
 	
 	public function actionNahled()
 	{
-		$link = $this->myUrl->getLink($this->getParameter('cislo'));
+		$link = $this->myUrl->getLink($this->getParameter('number'));
 		if ($link) {
 			$this->redirect($link['base'], $link['params']);
 		} else {

@@ -2,7 +2,8 @@
 
 namespace App\Model;
 
-use Nette;
+use Nette,
+	Nette\Utils\Strings;
 
 
 /**
@@ -45,6 +46,39 @@ class MyUrl extends Nette\Object
 		}
 		return $link;
 		
+	}
+	
+	public function getPresentersList()
+	{
+		$array = NULL;
+		$table = $this->database->table('presenter')->order('jmeno');
+		foreach ($table as $row) {
+			$array[$row->id] = Strings::lower($row->jmeno);
+		}
+		
+		return $array;
+	}
+	
+	public function getUrlsList()
+	{
+		$array = NULL;
+		$table = $this->database->table('url')->order('presenter_id, url1, url2');
+		foreach ($table as $row) {
+			$array[$row->id] = (($row->smazano > 0) ? 'SKRYTO:' : '') . Strings::lower($row->ref('presenter')->jmeno) . '/' . $row->url1 . (($row->url1 === '') ? '' : '/') . $row->url2 . (($row->url2 === '') ? '' : '/');
+		}
+		//\Tracy\Debugger::FireLog($array);
+		return $array;
+	}
+	
+	public function savePreview($values)
+	{
+		$this->database->table('copy_url')->insert($values);
+	}
+	
+	public function compareUrl($presenter_id, $url1, $url2)
+	{
+		$result = $this->database->table('url')->where('url1 = ?', $url1)->where('url2 = ?', $url2)->where('presenter_id = ?', $presenter_id)->order('id DESC')->fetch()->id;
+		return $result;
 	}
 
 }

@@ -38,6 +38,8 @@ class MyLorry extends Nette\Object
 	private $menuAct = NULL;
 	/** pole zveřejnitelných údajů o přihlášeném uživateli */
 	private $user = NULL;
+	private $presentersList = NULL;
+	private $urlsList = NULL;
 
 	public function setUrlContent($presenterId, $url1, $url2, $presenterName = NULL)
 	{
@@ -100,6 +102,47 @@ class MyLorry extends Nette\Object
 	public function getUser()
 	{
 		return $this->user;
+	}
+
+
+
+	public function getPresentersList()
+	{
+		if ($this->presentersList === NULL) {
+			$this->resetPresentersList();
+		}
+		return $this->presentersList;
+	}
+	public function setPresentersList()
+	{
+		if ($this->presentersList === NULL) {
+			$this->resetPresentersList();
+		}
+		return $this;
+	}
+	public function resetPresentersList()
+	{
+		$this->presentersList = $this->myUrl->getPresentersList();
+		return $this;
+	}
+	public function getUrlsList()
+	{
+		if ($this->urlsList === NULL) {
+			$this->resetUrlsList();
+		}
+		return $this->urlsList;
+	}
+	public function setUrlsList()
+	{
+		if ($this->urlsList === NULL) {
+			$this->resetUrlsList();
+		}
+		return $this;
+	}
+	public function resetPresentersList()
+	{
+		$this->urlsList = $this->myUrl->getUrlsList();
+		return $this;
 	}
 
 
