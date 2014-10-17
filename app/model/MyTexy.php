@@ -30,9 +30,15 @@ class MyTexy extends Nette\Object
 	
 
 
-	private function filterReferences($string, $save = TRUE)
+	private function filterReferences($string, $saveInternalLinks = TRUE)
 	{
 		$results = Strings::matchAll($string, '~"[^"]+":\[xxx([0-9]+)\]~');
+		\Tracy\Debugger::FireLog($results);
+	}
+	
+	public function process($string, $saveInternalLinks = TRUE)
+	{
+		$links = Strings::matchAll($string, '~"[^"]+":\[xxx([0-9]+)\]~');
 		\Tracy\Debugger::FireLog($results);
 	}
 

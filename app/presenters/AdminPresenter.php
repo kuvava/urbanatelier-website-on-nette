@@ -17,10 +17,7 @@ class AdminPresenter extends BaseAdminPresenter
 	public function startup()
 	{
 		parent::startup();
-		if (!$this->user->isInRole('admin')) {
-			$this->flashMessage('Pro vstup do požadované části webu se nejprve musíte přihlásit jako uživatel s administrátorskými právy.','flash-red');
-				$this->redirect('Uzivatel:prihlas');
-		}
+		$this->mustBeAdmin('Pro vstup do požadované části webu se nejprve musíte přihlásit jako uživatel s administrátorskými právy.');
 	}
 	
 	public function beforeRender()
@@ -58,6 +55,7 @@ class AdminPresenter extends BaseAdminPresenter
 	
 	public function chooseUrlForEditFormSubmitted(Nette\Application\UI\Form $form)
 	{
+		$this->mustBeAdmin();
 		$values = $form->getValues(TRUE);
 		\Tracy\Debugger::FireLog($values);
 		$this->redirect('this');

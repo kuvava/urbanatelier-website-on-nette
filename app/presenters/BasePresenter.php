@@ -44,7 +44,7 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
 		$this->myLorry->setMenu();
 		$this->template->myLorry = $this->myLorry;
 		if ($this->user->isLoggedIn()) {
-			$this->myLorry->setUser($user->id);
+			$this->myLorry->setUser($this->user->id);
 		}
 	}
 	
@@ -57,6 +57,13 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
 	{
 		$this->flashMessage($message,$class);
 		$this->error($errorText);
+	}
+	protected function mustBeAdmin($flash = 'Pro provedení požadované akce musíte být přihlášen jako uživatel s administrátorskými právy.')
+	{
+		if (!$this->user->isInRole('admin')){
+			$this->flashMessage($flash, 'flash-red');
+			$this->redirect('Uzivatel:prihlas');
+		}
 	}
 	
 	protected function setCustomFormRendering(Nette\Application\UI\Form $form)

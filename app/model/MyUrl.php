@@ -51,9 +51,9 @@ class MyUrl extends Nette\Object
 	public function getPresentersList()
 	{
 		$array = NULL;
-		$table = $this->database->table('presenter')->order('jmeno');
+		$table = $this->database->table('presenter')->order('name');
 		foreach ($table as $row) {
-			$array[$row->id] = Strings::lower($row->jmeno);
+			$array[$row->id] = Strings::lower($row->name);
 		}
 		
 		return $array;
@@ -64,7 +64,7 @@ class MyUrl extends Nette\Object
 		$array = NULL;
 		$table = $this->database->table('url')->order('presenter_id, url1, url2');
 		foreach ($table as $row) {
-			$array[$row->id] = (($row->smazano > 0) ? 'SKRYTO:' : '') . Strings::lower($row->ref('presenter')->jmeno) . '/' . $row->url1 . (($row->url1 === '') ? '' : '/') . $row->url2 . (($row->url2 === '') ? '' : '/');
+			$array[$row->id] = (($row->hidden > 0) ? 'SKRYTO:' : '') . Strings::lower($row->ref('presenter')->name) . '/' . $row->url1 . (($row->url1 === '') ? '' : '/') . $row->url2 . (($row->url2 === '') ? '' : '/');
 		}
 		//\Tracy\Debugger::FireLog($array);
 		return $array;

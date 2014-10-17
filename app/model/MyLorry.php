@@ -139,7 +139,7 @@ class MyLorry extends Nette\Object
 		}
 		return $this;
 	}
-	public function resetPresentersList()
+	public function resetUrlsList()
 	{
 		$this->urlsList = $this->myUrl->getUrlsList();
 		return $this;
