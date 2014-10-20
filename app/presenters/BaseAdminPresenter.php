@@ -44,11 +44,11 @@ class BaseAdminPresenter extends BasePresenter
 		$form->addText('meta_descr', 'Shrnutí pro vyhledávače:',130, 200)->setOption('description', html::el('small')->setHtml('Stručně shrň aktuální obsah dané url adresy (článku). Google může (a dělá to rád) tento Tvůj popisek zobrazit jako text výsledku hledání - zobrazuje tam okolo 145 znaků.'));
 		$form->addGroup('Popisky odkazu');
 		$form->addText('menu_text', 'Text odkazu v menu:', 50, 100)->setRequired('Vyplň povinně text pro odkazy v menu.');
-		$form->addText('bublina_odkazu', 'Vyskakovací bublina odkazu:', 70, 156)->setOption('description', html::el('small')->setHtml('To je takový ten drobný rámeček s dovysvětlením, který vyskočí, když člověk chvíli počká s myší na odkazu... Pro uživatele s dotykovým displayem (bez myši) je to asi nedostupné. Vyhledávače na to neberou zřetel. Nadužívání by možná i penalizovaly. Někdy se hodí k stručnému odkazu poskytnout v této bublině další informace.'));
+		$form->addText('link_title', 'Vyskakovací bublina odkazu:', 70, 156)->setOption('description', html::el('small')->setHtml('To je takový ten drobný rámeček s dovysvětlením, který vyskočí, když člověk chvíli počká s myší na odkazu... Pro uživatele s dotykovým displayem (bez myši) je to asi nedostupné. Vyhledávače na to neberou zřetel. Nadužívání by možná i penalizovaly. Někdy se hodí k stručnému odkazu poskytnout v této bublině další informace.'));
 		$form->addGroup('Hlavní text stránky (editor Texy2)');
 		$form->addTextArea('texy', 'Text (nápovědu k formátování nalezneš dole):', 100, 20);
 		$form->addGroup('Volby odeslání');
-		$form->addCheckbox('smazano', 'Znepřístupnit článek pro uživatele bez administrátorských práv?')->setOption('description', html::el('small')->setHtml('(Ukáže se jim "stránka nenalezena", navíc položka zmizí z menu včetně podpoložek...)'));
+		$form->addCheckbox('hidden', 'Znepřístupnit článek pro uživatele bez administrátorských práv?')->setOption('description', html::el('small')->setHtml('(Ukáže se jim "stránka nenalezena", navíc položka zmizí z menu včetně podpoložek...)'));
 		$form->addSubmit('preview', 'Nezávazný náhled editovaného článku')->onClick[] = array($this, 'submittedPreviewEditArticleForm');
 		$form->addSubmit('save', 'Uložit')->onClick[] = array($this, 'submittedSaveEditArticleForm');
 
@@ -133,6 +133,7 @@ class BaseAdminPresenter extends BasePresenter
 			$this->flashMessage('Zadaná kombinace url adres 1. a 2. části a subdomény již v databázi uložených článků existuje. Pro zdárné uložení tohoto článku budete tedy potřebovat buď změnit některou z částí url adresy právě nahlíženého rozpracovaného článku, nebo budete muset změnit některou část url adresy u <a href="' . $this->link($link['base'],$link['params']) . '" target="_blank">již dříve uloženého článku</a>.', 'flash-red');
 		}
 		/*$values['html'] = $this->myTexy->process($values['texy'], FALSE);*/
+		unset($values['menu_text']);
 		$this->myUrl->savePreview($values);
 		$this->redirect('this');
 	}

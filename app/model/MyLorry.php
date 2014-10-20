@@ -144,6 +144,12 @@ class MyLorry extends Nette\Object
 		$this->urlsList = $this->myUrl->getUrlsList();
 		return $this;
 	}
+	
+	
+	public function resetUrlContentFromCopies($number)
+	{
+		$this->urlContent = $this->myUrl->getUrlContentFromCopies($number);
+	}
 
 
 

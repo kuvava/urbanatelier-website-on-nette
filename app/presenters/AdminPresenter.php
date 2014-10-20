@@ -36,6 +36,15 @@ class AdminPresenter extends BaseAdminPresenter
 		}
 	}
 	
+	public function renderZaloha()
+	{
+		$number = $this->getParameter('number');
+		$this->myLorry->resetUrlContentFromCopies($number);
+		if (!$this->myLorry->urlContent) {
+			$this->shootError();
+		}
+	}
+	
 	protected function createComponentChooseUrlForEditForm()
 	{
 		$pole = $this->myLorry->getUrlsList();

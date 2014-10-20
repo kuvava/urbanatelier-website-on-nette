@@ -80,5 +80,9 @@ class MyUrl extends Nette\Object
 		$result = $this->database->table('url')->where('url1 = ?', $url1)->where('url2 = ?', $url2)->where('presenter_id = ?', $presenter_id)->order('id DESC')->fetch()->id;
 		return $result;
 	}
+	public function getUrlContentFromCopies($number)
+	{
+		return $this->database->table('copy_url')->order('id DESC')->page($number, 1)->fetch();
+	}
 
 }
