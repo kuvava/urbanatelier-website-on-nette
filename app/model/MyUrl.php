@@ -77,7 +77,11 @@ class MyUrl extends Nette\Object
 	
 	public function compareUrl($presenter_id, $url1, $url2)
 	{
-		$result = $this->database->table('url')->where('url1 = ?', $url1)->where('url2 = ?', $url2)->where('presenter_id = ?', $presenter_id)->order('id DESC')->fetch()->id;
+		$result = FALSE;
+		$row = $this->database->table('url')->where('url1 = ?', $url1)->where('url2 = ?', $url2)->where('presenter_id = ?', $presenter_id)->order('id DESC')->fetch();
+		if ($row) {
+			$result = $row->id;
+		}
 		return $result;
 	}
 	public function getUrlContentFromCopies($number)

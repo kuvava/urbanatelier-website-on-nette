@@ -117,7 +117,7 @@ class BaseAdminPresenter extends BasePresenter
 		
 		
 		
-		
+		$form->addHidden('url_id', $this->getParameter('number'));
 		$this->setCustomFormRendering($form);
 		return $form;
 	}
