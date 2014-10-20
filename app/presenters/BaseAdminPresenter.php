@@ -15,7 +15,7 @@ class BaseAdminPresenter extends BasePresenter
 {
 
 	/** @var Model\MyTexy */
-	private $myTexy;
+	protected $myTexy;
 	public function injectMyTexy(Model\MyTexy $myTexy)
 	{
 		$this->myTexy = $myTexy;
@@ -132,8 +132,16 @@ class BaseAdminPresenter extends BasePresenter
 			$link = $this->myUrl->getLink($urlId);
 			$this->flashMessage('Zadaná kombinace url adres 1. a 2. části a subdomény již v databázi uložených článků existuje. Pro zdárné uložení tohoto článku budete tedy potřebovat buď změnit některou z částí url adresy právě nahlíženého rozpracovaného článku, nebo budete muset změnit některou část url adresy u <a href="' . $this->link($link['base'],$link['params']) . '" target="_blank">již dříve uloženého článku</a>.', 'flash-red');
 		}
-		/*$values['html'] = $this->myTexy->process($values['texy'], FALSE);*/
-		unset($values['menu_text']);
+		$this->flashMessage('Článek byl úspěšně uložen do archivu nezávazných náhledů. Náhled můžete zobrazit kliknutím na tento odkaz: <a href="'.$this->link('Admin:zaloha', array('number' => '1')).'" target="_blank">zobrazit náhled</a>');
+		
+		$internLinks = $this->myTexy->filterReferences($values['texy']);
+		$references = '';
+		foreach ($internLinks as $r){
+			$l = NULL;
+			$l = $this->myUrl->getLink($r[1]);
+			$references .= "\r\n[xxx".$r[1]."]: ".$this->link($l['base'],$l['params']);
+		}
+		$values['html'] = $this->myTexy->process($values['texy'], $references);
 		$this->myUrl->savePreview($values);
 		$this->redirect('this');
 	}

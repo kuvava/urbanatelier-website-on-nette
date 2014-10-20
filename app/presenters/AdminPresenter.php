@@ -59,10 +59,52 @@ class AdminPresenter extends BaseAdminPresenter
 			->setAttribute('class','nahled');
 		$form->addSubmit('choose', 'Přejít k editaci');
 		$form->onSuccess[] = array($this, 'chooseUrlForEditFormSubmitted');
+		$this->setCustomFormRendering($form);
 		return $form;
 	}
 	
 	public function chooseUrlForEditFormSubmitted(Nette\Application\UI\Form $form)
+	{
+		$this->mustBeAdmin();
+		$values = $form->getValues(TRUE);
+		\Tracy\Debugger::FireLog($values);
+		$this->redirect('this');
+	}
+	
+	protected function createComponentChooseCopyUrlForEditForm()
+	{
+		$form = new Nette\Application\UI\Form;
+		$form->addText('number', 'Kolikátou zálohu od nejnovějších si přeješ editovat:')
+			->setType('number')
+			->setDefaultValue(1)
+			->setRequired('Musíš zadat číslo.')
+			->setAttribute('class','zaloha');
+		$form->addButton('preview', 'Náhled vybraného archivního článku')
+			->setAttribute('class','zaloha');
+		$form->addSubmit('choose', 'Přejít k editaci');
+		$form->onSuccess[] = array($this, 'chooseCopyUrlForEditForm');
+		$this->setCustomFormRendering($form);
+		return $form;
+	}
+	
+	public function chooseCopyUrlForEditFormSubmitted(Nette\Application\UI\Form $form)
+	{
+		$this->mustBeAdmin();
+		$values = $form->getValues(TRUE);
+		\Tracy\Debugger::FireLog($values);
+		$this->redirect('this');
+	}
+	
+	protected function createComponentNewArticleEditForm()
+	{
+		$form = new Nette\Application\UI\Form;
+		$form->addSubmit('new', 'Vytvořit nový článek');
+		$form->onSuccess[] = array($this, 'newArticleEditFormSubmitted');
+		$this->setCustomFormRendering($form);
+		return $form;
+	}
+	
+	public function newArticleEditFormSubmitted(Nette\Application\UI\Form $form)
 	{
 		$this->mustBeAdmin();
 		$values = $form->getValues(TRUE);

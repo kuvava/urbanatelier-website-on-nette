@@ -1,5 +1,9 @@
 {layout '@admin.latte'}
 {block content}
+<h2>Vytořit nový článek:</h2>
+{control newArticleEditForm}
+<h2>Editace již uložených článků:</h2>
 {control chooseUrlForEditForm}
-{control editArticleForm}
+<h2>Editace článků z archivu nezávazně uložených náhledů:</h2>
+{control chooseCopyUrlForEditForm}
 {/block}
